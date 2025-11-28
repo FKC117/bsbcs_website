@@ -1,0 +1,723 @@
+
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 py-12 md:py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="100" r="120" fill="#E91E63"/>
+                <circle cx="1000" cy="300" r="150" fill="#1976D2"/>
+                <circle cx="600" cy="200" r="100" fill="#00695C"/>
+            </svg>
+        </div>
+        
+        <div class="container-custom relative z-10">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-primary-100 text-primary-800 px-4 py-2 rounded-full mb-4">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    <span class="font-semibold">2,500+ Active Members</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-4">Member Directory</h1>
+                <p class="text-lg text-text-secondary leading-relaxed">Connect with Bangladesh's leading breast cancer specialists, researchers, and healthcare professionals. Build collaborations, share knowledge, and advance patient care together.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="section-compact bg-surface border-b border-border sticky top-20 z-sticky">
+        <div class="container-custom">
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- Search Bar -->
+                <div class="flex-1">
+                    <div class="relative">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Search by name, specialty, institution..." class="form-input pl-12 pr-4">
+                    </div>
+                </div>
+
+                <!-- Filter Button -->
+                <button id="filterToggle" class="btn-outline flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                    </svg>
+                    Advanced Filters
+                    <span id="filterCount" class="hidden bg-primary text-white text-xs px-2 py-1 rounded-full">0</span>
+                </button>
+
+                <!-- Reset Filters -->
+                <button id="resetFilters" class="btn-ghost hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Advanced Filter Panel -->
+            <div id="filterPanel" class="hidden mt-6 p-6 bg-primary-50 rounded-lg border border-primary-200">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Specialty Filter -->
+                    <div>
+                        <label class="form-label">Specialty</label>
+                        <select id="specialtyFilter" class="form-input">
+                            <option value="">All Specialties</option>
+                            <option value="medical-oncology">Medical Oncology</option>
+                            <option value="surgical-oncology">Surgical Oncology</option>
+                            <option value="radiation-oncology">Radiation Oncology</option>
+                            <option value="radiology">Radiology</option>
+                            <option value="pathology">Pathology</option>
+                            <option value="genetics">Genetics & Genomics</option>
+                            <option value="nursing">Oncology Nursing</option>
+                            <option value="research">Research</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Filter -->
+                    <div>
+                        <label class="form-label">Location</label>
+                        <select id="locationFilter" class="form-input">
+                            <option value="">All Locations</option>
+                            <option value="dhaka">Dhaka</option>
+                            <option value="chittagong">Chittagong</option>
+                            <option value="sylhet">Sylhet</option>
+                            <option value="rajshahi">Rajshahi</option>
+                            <option value="khulna">Khulna</option>
+                            <option value="barisal">Barisal</option>
+                            <option value="rangpur">Rangpur</option>
+                        </select>
+                    </div>
+
+                    <!-- Experience Filter -->
+                    <div>
+                        <label class="form-label">Years of Experience</label>
+                        <select id="experienceFilter" class="form-input">
+                            <option value="">Any Experience</option>
+                            <option value="0-5">0-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10-15">10-15 years</option>
+                            <option value="15-20">15-20 years</option>
+                            <option value="20+">20+ years</option>
+                        </select>
+                    </div>
+
+                    <!-- Research Interest Filter -->
+                    <div>
+                        <label class="form-label">Research Interest</label>
+                        <select id="researchFilter" class="form-input">
+                            <option value="">All Research Areas</option>
+                            <option value="immunotherapy">Immunotherapy</option>
+                            <option value="targeted-therapy">Targeted Therapy</option>
+                            <option value="early-detection">Early Detection</option>
+                            <option value="genetics">Genetic Research</option>
+                            <option value="clinical-trials">Clinical Trials</option>
+                            <option value="survivorship">Survivorship Care</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-4 mt-6">
+                    <button id="clearFilters" class="btn-ghost">Clear All</button>
+                    <button id="applyFilters" class="btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Summary -->
+    <section class="section-compact bg-background">
+        <div class="container-custom">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <p class="text-text-secondary">
+                    Showing <span id="resultCount" class="font-semibold text-text-primary">2,487</span> members
+                </p>
+                <div class="flex items-center gap-4">
+                    <label class="text-sm text-text-secondary">Sort by:</label>
+                    <select id="sortBy" class="form-input py-2">
+                        <option value="name">Name (A-Z)</option>
+                        <option value="specialty">Specialty</option>
+                        <option value="experience">Experience</option>
+                        <option value="recent">Recently Joined</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Member Grid -->
+    <section class="section">
+        <div class="container-custom">
+            <div id="memberGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Member Card 1 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="medical-oncology" data-location="dhaka" data-experience="15-20">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_13bc8a30a-1763300103319.png" alt="Dr. Fatima Rahman, Medical Oncologist with 18 years of experience in breast cancer treatment" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=400&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Fatima Rahman</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Medical Oncology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>18 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Specialized in targeted therapy for triple-negative breast cancer. Leading researcher in immunotherapy combinations.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Dhaka
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Immunotherapy
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Dhaka Medical College Hospital</p>
+                            <p>Professor & Head of Department</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 2 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="surgical-oncology" data-location="dhaka" data-experience="10-15">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_136bb23e3-1763295283704.png" alt="Dr. Ahmed Hassan, Surgical Oncologist specializing in minimally invasive breast surgery" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Ahmed Hassan</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Surgical Oncology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>12 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Expert in minimally invasive breast surgery and oncoplastic reconstruction. Pioneer in robotic-assisted procedures.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Dhaka
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Clinical Trials
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">National Institute of Cancer Research</p>
+                            <p>Senior Consultant Surgeon</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 3 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="radiology" data-location="dhaka" data-experience="10-15">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_149b83e86-1763299871782.png" alt="Dr. Nusrat Jahan, Radiologist specializing in breast imaging and AI-enhanced diagnostics" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=400&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Nusrat Jahan</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Radiology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>11 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Leading expert in breast MRI and AI-enhanced mammography interpretation. Research focus on early detection technologies.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Dhaka
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Early Detection
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Square Hospitals Ltd.</p>
+                            <p>Consultant Radiologist</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 4 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="pathology" data-location="chittagong" data-experience="15-20">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1d20bf08a-1763650254520.png" alt="Dr. Sarah Ahmed, Pathologist specializing in molecular diagnostics and biomarker analysis" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Sarah Ahmed</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Pathology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>16 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Molecular pathology expert with focus on HER2 testing and genomic profiling. International training in precision medicine.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Chittagong
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Genetics
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Chittagong Medical College</p>
+                            <p>Associate Professor</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 5 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="radiation-oncology" data-location="sylhet" data-experience="5-10">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_17da88877-1763294146749.png" alt="Dr. Kamal Hossain, Radiation Oncologist with expertise in advanced radiotherapy techniques" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=400&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Kamal Hossain</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Radiation Oncology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>8 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Specialized in IMRT and stereotactic radiotherapy. Research interest in reducing treatment toxicity and improving quality of life.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Sylhet
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Survivorship
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Sylhet MAG Osmani Medical College</p>
+                            <p>Assistant Professor</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 6 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="genetics" data-location="dhaka" data-experience="5-10">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_168d3ba53-1763650255602.png" alt="Dr. Reza Khan, Genetic Counselor specializing in hereditary breast cancer risk assessment" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Reza Khan</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Genetics & Genomics</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>7 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Expert in BRCA testing and hereditary cancer syndromes. Provides comprehensive genetic counseling and risk management strategies.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Dhaka
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Genetics
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Bangabandhu Sheikh Mujib Medical University</p>
+                            <p>Genetic Counselor</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 7 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="nursing" data-location="rajshahi" data-experience="10-15">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1e0d710f5-1763650256478.png" alt="Nurse Ayesha Begum, Oncology Nurse Specialist with expertise in chemotherapy administration" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=400&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Nurse Ayesha Begum</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Oncology Nursing</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>13 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Certified oncology nurse with advanced training in chemotherapy administration and symptom management. Patient education advocate.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Rajshahi
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Survivorship
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Rajshahi Medical College Hospital</p>
+                            <p>Senior Oncology Nurse</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 8 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="research" data-location="khulna" data-experience="0-5">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1e4ecac6e-1763295185052.png" alt="Dr. Tanvir Islam, Research Scientist focusing on cancer biology and drug development" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Tanvir Islam</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Research Scientist</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>4 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">PhD in cancer biology with focus on tumor microenvironment and drug resistance mechanisms. Published researcher in international journals.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Khulna
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Targeted Therapy
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Khulna University</p>
+                            <p>Research Fellow</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Member Card 9 -->
+                <div class="card hover-lift hover-shadow member-card" data-specialty="medical-oncology" data-location="barisal" data-experience="20+">
+                    <div class="flex items-start gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_13bc8a30a-1763300103319.png" alt="Dr. Nasrin Sultana, Medical Oncologist with over 22 years of clinical experience" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=400&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Nasrin Sultana</h3>
+                            <p class="text-sm text-secondary font-semibold mb-2">Medical Oncology</p>
+                            <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>22 years experience</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Veteran oncologist with extensive experience in hormone receptor-positive breast cancer management. Mentor to young oncologists.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            Barisal
+                        </span>
+                        <span class="inline-flex items-center gap-1 bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Clinical Trials
+                        </span>
+                    </div>
+
+                    <div class="border-t border-border pt-4 flex items-center justify-between">
+                        <div class="text-xs text-text-secondary">
+                            <p class="font-semibold text-text-primary">Sher-e-Bangla Medical College</p>
+                            <p>Professor & Chief Consultant</p>
+                        </div>
+                        <button class="btn-ghost text-sm py-2 px-4">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="btn-outline">
+                    Load More Members
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Benefits CTA -->
+    <section class="section bg-gradient-to-br from-secondary via-secondary-600 to-secondary-700 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="100" fill="white"/>
+                <circle cx="1100" cy="300" r="150" fill="white"/>
+                <circle cx="600" cy="200" r="80" fill="white"/>
+            </svg>
+        </div>
+        
+        <div class="container-custom relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6">Join Our Professional Network</h2>
+                <p class="text-lg text-secondary-100 mb-8 leading-relaxed">Connect with 2,500+ breast cancer specialists, access exclusive research, participate in collaborative studies, and advance your professional development.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white">Apply for Membership</button>
+                    <button class="btn bg-transparent border-2 border-white text-white hover:bg-white/10 focus:ring-white">Learn About Benefits</button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Filter Panel Toggle
+        const filterToggle = document.getElementById('filterToggle');
+        const filterPanel = document.getElementById('filterPanel');
+        const resetFilters = document.getElementById('resetFilters');
+        const clearFilters = document.getElementById('clearFilters');
+        const applyFilters = document.getElementById('applyFilters');
+        const filterCount = document.getElementById('filterCount');
+
+        filterToggle.addEventListener('click', () => {
+            filterPanel.classList.toggle('hidden');
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const memberCards = document.querySelectorAll('.member-card');
+        const resultCount = document.getElementById('resultCount');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            let visibleCount = 0;
+
+            memberCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            resultCount.textContent = visibleCount;
+        });
+
+        // Filter Functionality
+        const specialtyFilter = document.getElementById('specialtyFilter');
+        const locationFilter = document.getElementById('locationFilter');
+        const experienceFilter = document.getElementById('experienceFilter');
+        const researchFilter = document.getElementById('researchFilter');
+
+        function updateFilterCount() {
+            let count = 0;
+            if (specialtyFilter.value) count++;
+            if (locationFilter.value) count++;
+            if (experienceFilter.value) count++;
+            if (researchFilter.value) count++;
+
+            if (count > 0) {
+                filterCount.textContent = count;
+                filterCount.classList.remove('hidden');
+                resetFilters.classList.remove('hidden');
+            } else {
+                filterCount.classList.add('hidden');
+                resetFilters.classList.add('hidden');
+            }
+        }
+
+        function applyFilterLogic() {
+            let visibleCount = 0;
+
+            memberCards.forEach(card => {
+                const specialty = card.dataset.specialty;
+                const location = card.dataset.location;
+                const experience = card.dataset.experience;
+
+                const specialtyMatch = !specialtyFilter.value || specialty === specialtyFilter.value;
+                const locationMatch = !locationFilter.value || location === locationFilter.value;
+                const experienceMatch = !experienceFilter.value || experience === experienceFilter.value;
+
+                if (specialtyMatch && locationMatch && experienceMatch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            resultCount.textContent = visibleCount;
+            updateFilterCount();
+        }
+
+        applyFilters.addEventListener('click', () => {
+            applyFilterLogic();
+            filterPanel.classList.add('hidden');
+        });
+
+        clearFilters.addEventListener('click', () => {
+            specialtyFilter.value = '';
+            locationFilter.value = '';
+            experienceFilter.value = '';
+            researchFilter.value = '';
+            updateFilterCount();
+        });
+
+        resetFilters.addEventListener('click', () => {
+            specialtyFilter.value = '';
+            locationFilter.value = '';
+            experienceFilter.value = '';
+            researchFilter.value = '';
+            searchInput.value = '';
+            memberCards.forEach(card => card.style.display = 'block');
+            resultCount.textContent = memberCards.length;
+            updateFilterCount();
+        });
+
+        // Sort Functionality
+        const sortBy = document.getElementById('sortBy');
+        const memberGrid = document.getElementById('memberGrid');
+
+        sortBy.addEventListener('change', (e) => {
+            const sortValue = e.target.value;
+            const cardsArray = Array.from(memberCards);
+
+            cardsArray.sort((a, b) => {
+                if (sortValue === 'name') {
+                    const nameA = a.querySelector('h3').textContent;
+                    const nameB = b.querySelector('h3').textContent;
+                    return nameA.localeCompare(nameB);
+                } else if (sortValue === 'specialty') {
+                    const specA = a.dataset.specialty;
+                    const specB = b.dataset.specialty;
+                    return specA.localeCompare(specB);
+                } else if (sortValue === 'experience') {
+                    const expA = a.dataset.experience;
+                    const expB = b.dataset.experience;
+                    return expB.localeCompare(expA);
+                }
+                return 0;
+            });
+
+            memberGrid.innerHTML = '';
+            cardsArray.forEach(card => memberGrid.appendChild(card));
+        });
+    </script>
+{% endblock %}

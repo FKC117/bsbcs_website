@@ -1,0 +1,602 @@
+
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-50 via-accent-50 to-secondary-50 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 200C200 100 400 300 600 200C800 100 1000 300 1200 200V400H0V200Z" fill="#1976D2"/>
+                <path d="M0 250C200 150 400 350 600 250C800 150 1000 350 1200 250V400H0V250Z" fill="#00695C" opacity="0.5"/>
+            </svg>
+        </div>
+        
+        <div class="container-custom relative z-10 py-16 md:py-20">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 bg-accent-100 text-accent-800 px-4 py-2 rounded-full mb-6">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                    </svg>
+                    <span class="font-semibold">Comprehensive Resource Library</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Knowledge Center</h1>
+                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">Access evidence-based clinical guidelines, research publications, educational materials, and professional development resources designed to advance breast cancer care excellence.</p>
+                
+                <!-- Search Bar -->
+                <div class="bg-surface rounded-lg shadow-lg p-2 flex items-center gap-2 max-w-2xl">
+                    <svg class="w-6 h-6 text-text-tertiary ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" id="resourceSearch" placeholder="Search resources, guidelines, tools..." class="flex-1 px-4 py-3 border-0 focus:outline-none focus:ring-0 bg-transparent text-text-primary">
+                    <button class="btn-primary">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Access Categories -->
+    <section class="section-compact bg-surface border-b border-border">
+        <div class="container-custom">
+            <div class="flex overflow-x-auto gap-4 pb-2 scrollbar-hide">
+                <button class="category-filter active flex-shrink-0 px-6 py-3 rounded-full bg-primary text-white font-semibold transition-all" data-category="all">
+                    All Resources
+                </button>
+                <button class="category-filter flex-shrink-0 px-6 py-3 rounded-full bg-primary-50 text-primary font-semibold hover:bg-primary-100 transition-all" data-category="guidelines">
+                    Clinical Guidelines
+                </button>
+                <button class="category-filter flex-shrink-0 px-6 py-3 rounded-full bg-secondary-50 text-secondary font-semibold hover:bg-secondary-100 transition-all" data-category="research">
+                    Research Publications
+                </button>
+                <button class="category-filter flex-shrink-0 px-6 py-3 rounded-full bg-accent-50 text-accent font-semibold hover:bg-accent-100 transition-all" data-category="education">
+                    Educational Materials
+                </button>
+                <button class="category-filter flex-shrink-0 px-6 py-3 rounded-full bg-warning-light text-warning-dark font-semibold hover:bg-warning transition-all" data-category="tools">
+                    Clinical Tools
+                </button>
+                <button class="category-filter flex-shrink-0 px-6 py-3 rounded-full bg-success-light text-success-dark font-semibold hover:bg-success transition-all" data-category="webinars">
+                    Webinar Archives
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Resources -->
+    <section class="section">
+        <div class="container-custom">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Featured Resources</h2>
+                    <p class="text-lg text-text-secondary">Most accessed and highly rated materials by our members</p>
+                </div>
+                <div class="flex items-center gap-4 mt-4 md:mt-0">
+                    <button id="filterBtn" class="btn-outline flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                        </svg>
+                        Filter
+                    </button>
+                    <button id="resetBtn" class="btn-ghost flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Resource Card 1 -->
+                <div class="card-elevated hover-lift hover-shadow group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="inline-flex items-center gap-1 bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"/>
+                            </svg>
+                            Clinical Guideline
+                        </span>
+                        <button class="text-text-tertiary hover:text-secondary transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">NCCN Guidelines for Breast Cancer Treatment 2025</h3>
+                    <p class="text-text-secondary mb-4 leading-relaxed">Comprehensive evidence-based clinical practice guidelines for breast cancer screening, diagnosis, and treatment protocols.</p>
+                    <div class="flex items-center gap-4 mb-4 text-sm text-text-secondary">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                            Updated: Nov 2025
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            4.9 (1,245)
+                        </span>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary flex-1">Download PDF</button>
+                        <button class="btn-outline">Preview</button>
+                    </div>
+                </div>
+
+                <!-- Resource Card 2 -->
+                <div class="card-elevated hover-lift hover-shadow group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="inline-flex items-center gap-1 bg-accent-100 text-accent-800 px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                            Educational Material
+                        </span>
+                        <button class="text-text-tertiary hover:text-secondary transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">Patient Education: Understanding Breast Cancer Stages</h3>
+                    <p class="text-text-secondary mb-4 leading-relaxed">Comprehensive patient-friendly guide explaining breast cancer staging, treatment options, and prognosis in accessible language.</p>
+                    <div class="flex items-center gap-4 mb-4 text-sm text-text-secondary">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                            Updated: Oct 2025
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            4.8 (892)
+                        </span>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary flex-1">Download PDF</button>
+                        <button class="btn-outline">Preview</button>
+                    </div>
+                </div>
+
+                <!-- Resource Card 3 -->
+                <div class="card-elevated hover-lift hover-shadow group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="inline-flex items-center gap-1 bg-warning-light text-warning-dark px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clip-rule="evenodd"/>
+                            </svg>
+                            Clinical Tool
+                        </span>
+                        <button class="text-text-tertiary hover:text-secondary transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">Breast Cancer Risk Assessment Calculator</h3>
+                    <p class="text-text-secondary mb-4 leading-relaxed">Interactive tool for calculating individual breast cancer risk based on validated Gail Model and Tyrer-Cuzick algorithms.</p>
+                    <div class="flex items-center gap-4 mb-4 text-sm text-text-secondary">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                            Updated: Nov 2025
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            4.7 (654)
+                        </span>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary flex-1">Launch Tool</button>
+                        <button class="btn-outline">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinical Guidelines Library -->
+    <section class="section bg-primary-50">
+        <div class="container-custom">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Clinical Guidelines & Protocols</h2>
+                <p class="text-lg text-text-secondary max-w-3xl mx-auto">Evidence-based practice guidelines for breast cancer screening, diagnosis, treatment, and survivorship care</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Guideline Item 1 -->
+                <div class="card hover-lift hover-shadow border-l-4 border-primary">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 p-3 bg-primary-100 rounded-lg">
+                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Breast Cancer Screening Guidelines</h3>
+                            <p class="text-sm text-text-secondary mb-3">Comprehensive screening recommendations for different age groups and risk categories</p>
+                            <div class="flex items-center gap-4 text-xs text-text-tertiary mb-3">
+                                <span>Updated: Nov 2025</span>
+                                <span>•</span>
+                                <span>42 pages</span>
+                                <span>•</span>
+                                <span>PDF Format</span>
+                            </div>
+                            <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                                Download Guideline
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guideline Item 2 -->
+                <div class="card hover-lift hover-shadow border-l-4 border-secondary">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 p-3 bg-secondary-100 rounded-lg">
+                            <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Surgical Treatment Protocols</h3>
+                            <p class="text-sm text-text-secondary mb-3">Evidence-based surgical approaches for breast-conserving therapy and mastectomy</p>
+                            <div class="flex items-center gap-4 text-xs text-text-tertiary mb-3">
+                                <span>Updated: Oct 2025</span>
+                                <span>•</span>
+                                <span>68 pages</span>
+                                <span>•</span>
+                                <span>PDF Format</span>
+                            </div>
+                            <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                                Download Guideline
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guideline Item 3 -->
+                <div class="card hover-lift hover-shadow border-l-4 border-accent">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 p-3 bg-accent-100 rounded-lg">
+                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Chemotherapy Treatment Guidelines</h3>
+                            <p class="text-sm text-text-secondary mb-3">Systemic therapy protocols for different breast cancer subtypes and stages</p>
+                            <div class="flex items-center gap-4 text-xs text-text-tertiary mb-3">
+                                <span>Updated: Nov 2025</span>
+                                <span>•</span>
+                                <span>95 pages</span>
+                                <span>•</span>
+                                <span>PDF Format</span>
+                            </div>
+                            <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                                Download Guideline
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guideline Item 4 -->
+                <div class="card hover-lift hover-shadow border-l-4 border-warning">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 p-3 bg-warning-light rounded-lg">
+                            <svg class="w-8 h-8 text-warning-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Survivorship Care Guidelines</h3>
+                            <p class="text-sm text-text-secondary mb-3">Long-term follow-up protocols and quality of life management for survivors</p>
+                            <div class="flex items-center gap-4 text-xs text-text-tertiary mb-3">
+                                <span>Updated: Sep 2025</span>
+                                <span>•</span>
+                                <span>54 pages</span>
+                                <span>•</span>
+                                <span>PDF Format</span>
+                            </div>
+                            <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                                Download Guideline
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button class="btn-primary">View All Guidelines</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Clinical Tools -->
+    <section class="section">
+        <div class="container-custom">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Interactive Clinical Tools</h2>
+                <p class="text-lg text-text-secondary max-w-3xl mx-auto">Evidence-based calculators and assessment tools for clinical decision support</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-primary-100 rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Risk Assessment Calculator</h3>
+                    <p class="text-sm text-text-secondary mb-4">Calculate individual breast cancer risk using validated models</p>
+                    <button class="btn-primary w-full">Launch Calculator</button>
+                </div>
+
+                <!-- Tool Card 2 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-secondary-100 rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Staging Assessment Tool</h3>
+                    <p class="text-sm text-text-secondary mb-4">Determine TNM staging based on clinical and pathological findings</p>
+                    <button class="btn-primary w-full">Launch Tool</button>
+                </div>
+
+                <!-- Tool Card 3 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-accent-100 rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Treatment Timeline Planner</h3>
+                    <p class="text-sm text-text-secondary mb-4">Create personalized treatment schedules and follow-up plans</p>
+                    <button class="btn-primary w-full">Launch Planner</button>
+                </div>
+
+                <!-- Tool Card 4 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-warning-light rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-warning-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Prognosis Estimator</h3>
+                    <p class="text-sm text-text-secondary mb-4">Estimate survival outcomes based on tumor characteristics</p>
+                    <button class="btn-primary w-full">Launch Estimator</button>
+                </div>
+
+                <!-- Tool Card 5 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-success-light rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-success-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Chemotherapy Dose Calculator</h3>
+                    <p class="text-sm text-text-secondary mb-4">Calculate appropriate chemotherapy dosing based on BSA</p>
+                    <button class="btn-primary w-full">Launch Calculator</button>
+                </div>
+
+                <!-- Tool Card 6 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="flex items-center justify-center w-16 h-16 bg-error-light rounded-lg mb-4">
+                        <svg class="w-8 h-8 text-error-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-2">Side Effect Management Guide</h3>
+                    <p class="text-sm text-text-secondary mb-4">Interactive guide for managing treatment-related side effects</p>
+                    <button class="btn-primary w-full">Launch Guide</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Webinar Archives -->
+    <section class="section bg-secondary-50">
+        <div class="container-custom">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Webinar Archives</h2>
+                    <p class="text-lg text-text-secondary">On-demand access to educational webinars and expert presentations</p>
+                </div>
+                <button class="btn-primary mt-4 md:mt-0">View All Webinars</button>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Webinar Card 1 -->
+                <div class="card-elevated hover-lift hover-shadow">
+                    <div class="relative mb-6 overflow-hidden rounded-lg">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_147df9e25-1763650258011.png" alt="Medical professional presenting webinar on advances in breast cancer immunotherapy" class="w-full h-48 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-text-primary/80 to-transparent flex items-end p-6">
+                            <div class="flex items-center gap-2 text-white">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="font-semibold">1:45:30</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="inline-flex items-center gap-1 bg-success-light text-success-dark px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                            </svg>
+                            Recorded Webinar
+                        </span>
+                        <span class="text-xs text-text-tertiary">Nov 15, 2025</span>
+                    </div>
+                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-3">Advances in Breast Cancer Immunotherapy: Clinical Applications</h3>
+                    <p class="text-text-secondary mb-4 leading-relaxed">Comprehensive review of checkpoint inhibitors and their role in triple-negative breast cancer treatment.</p>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_12a6b4e78-1763299110508.png" alt="Dr. Sarah Ahmed, presenter" class="w-10 h-10 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
+                        <div>
+                            <p class="font-semibold text-text-primary text-sm">Dr. Sarah Ahmed</p>
+                            <p class="text-xs text-text-secondary">Medical Oncologist</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary flex-1">Watch Now</button>
+                        <button class="btn-outline">Download Slides</button>
+                    </div>
+                </div>
+
+                <!-- Webinar Card 2 -->
+                <div class="card-elevated hover-lift hover-shadow">
+                    <div class="relative mb-6 overflow-hidden rounded-lg">
+                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1f6e333ac-1763650256531.png" alt="Expert panel discussion on precision medicine in breast cancer treatment" class="w-full h-48 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                        <div class="absolute inset-0 bg-gradient-to-t from-text-primary/80 to-transparent flex items-end p-6">
+                            <div class="flex items-center gap-2 text-white">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="font-semibold">2:15:45</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="inline-flex items-center gap-1 bg-success-light text-success-dark px-3 py-1 rounded-full text-xs font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                            </svg>
+                            Recorded Webinar
+                        </span>
+                        <span class="text-xs text-text-tertiary">Oct 28, 2025</span>
+                    </div>
+                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-3">Precision Medicine in Breast Cancer: Genomic Testing and Treatment Selection</h3>
+                    <p class="text-text-secondary mb-4 leading-relaxed">Expert panel discussion on integrating genomic profiling into clinical decision-making.</p>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://images.unsplash.com/photo-1699156246635-98dcc81f1d64" alt="Dr. Kamal Hossain, presenter" class="w-10 h-10 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                        <div>
+                            <p class="font-semibold text-text-primary text-sm">Dr. Kamal Hossain</p>
+                            <p class="text-xs text-text-secondary">Molecular Oncologist</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn-primary flex-1">Watch Now</button>
+                        <button class="btn-outline">Download Slides</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Documentation -->
+    <section class="section">
+        <div class="container-custom">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Best Practices & Case Studies</h2>
+                <p class="text-lg text-text-secondary max-w-3xl mx-auto">Real-world implementation guides and successful treatment approaches from leading institutions</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Case Study 1 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="highlight-primary mb-4">
+                        <span class="text-sm font-semibold text-primary">Case Study</span>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-3">Multidisciplinary Tumor Board Implementation</h3>
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Step-by-step guide to establishing effective multidisciplinary breast cancer care teams with measurable outcomes.</p>
+                    <div class="flex items-center gap-2 text-xs text-text-tertiary mb-4">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Published: Nov 2025</span>
+                        <span>•</span>
+                        <span>15 min read</span>
+                    </div>
+                    <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                        Read Case Study
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="highlight-secondary mb-4">
+                        <span class="text-sm font-semibold text-secondary">Case Study</span>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-3">Patient Navigation Program Success Story</h3>
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">How a comprehensive patient navigation program improved treatment adherence and outcomes by 40%.</p>
+                    <div class="flex items-center gap-2 text-xs text-text-tertiary mb-4">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Published: Oct 2025</span>
+                        <span>•</span>
+                        <span>12 min read</span>
+                    </div>
+                    <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                        Read Case Study
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Case Study 3 -->
+                <div class="card hover-lift hover-shadow">
+                    <div class="highlight-accent mb-4">
+                        <span class="text-sm font-semibold text-accent">Case Study</span>
+                    </div>
+                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-3">Quality Improvement Initiative Results</h3>
+                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Systematic approach to reducing time-to-treatment initiation with documented quality metrics.</p>
+                    <div class="flex items-center gap-2 text-xs text-text-tertiary mb-4">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Published: Sep 2025</span>
+                        <span>•</span>
+                        <span>18 min read</span>
+                    </div>
+                    <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
+                        Read Case Study
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription CTA -->
+    <section class="section bg-gradient-to-r from-primary to-primary-700 text-white">
+        <div class="container-custom">
+            <div class="max-w-3xl mx-auto text-center">
+                <svg class="w-16 h-16 mx-auto mb-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6">Stay Updated with Latest Resources</h2>
+                <p class="text-lg text-primary-100 mb-8 leading-relaxed">Subscribe to receive notifications about new clinical guidelines, research publications, and educational materials.</p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="Enter your email address" class="flex-1 px-6 py-4 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-white">
+                    <button class="btn bg-white text-primary hover:bg-primary-50 focus:ring-white px-8 py-4">Subscribe</button>
+                </div>
+                <p class="text-sm text-primary-100 mt-4">Join 2,500+ members receiving monthly resource updates</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
