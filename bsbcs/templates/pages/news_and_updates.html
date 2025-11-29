@@ -26,22 +26,20 @@
                     <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">News & Updates</h1>
                 {% endif %}
                 {% if hero and hero.subtitle %}
-                    <p class="text-lg text-text-secondary leading-relaxed">{{ hero.subtitle }}</p>
+                    <p class="text-lg text-text-secondary leading-relaxed mb-8">{{ hero.subtitle }}</p>
                 {% else %}
-                    <p class="text-lg text-text-secondary leading-relaxed">Stay connected with the latest developments in breast cancer research, society announcements, and medical breakthroughs shaping the future of patient care.</p>
+                    <p class="text-lg text-text-secondary leading-relaxed mb-8">Stay connected with the latest developments in breast cancer research, society announcements, and medical breakthroughs shaping the future of patient care.</p>
                 {% endif %}
-                <div class="mb-8 flex flex-wrap gap-4">
-                    {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
-                        <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-primary inline-block">Read Latest News</button>
-                    {% endif %}
-                    {% if call_to_action and call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
-                        <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-outline inline-block">Subscribe Updates</button>
-                    {% endif %}
-                </div>
+                {% if call_to_action %}
+                    <div class="mb-8 flex flex-wrap gap-4">
+                        {% if call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                            <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
+                        {% endif %}
+                        {% if call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>

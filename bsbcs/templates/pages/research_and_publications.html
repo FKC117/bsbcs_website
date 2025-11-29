@@ -26,22 +26,20 @@
                     <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Research & Publications</h1>
                 {% endif %}
                 {% if hero and hero.subtitle %}
-                    <p class="text-lg text-text-secondary leading-relaxed mb-8">{{ hero.subtitle }}</p>
+                    <p class="text-lg text-text-secondary leading-relaxed mb-12">{{ hero.subtitle }}</p>
                 {% else %}
-                    <p class="text-lg text-text-secondary leading-relaxed mb-8">Advancing breast cancer care through rigorous scientific inquiry. Explore our comprehensive database of peer-reviewed publications, ongoing research projects, and collaboration opportunities that drive innovation in treatment and patient outcomes.</p>
+                    <p class="text-lg text-text-secondary leading-relaxed mb-12">Advancing breast cancer care through rigorous scientific inquiry. Explore our comprehensive database of peer-reviewed publications, ongoing research projects, and collaboration opportunities that drive innovation in treatment and patient outcomes.</p>
                 {% endif %}
-                <div class="flex flex-wrap gap-4">
-                    {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
-                        <a href="{{ call_to_action.primary_button_url }}" class="btn-primary">{{ call_to_action.primary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-primary">Submit Research</button>
-                    {% endif %}
-                    {% if call_to_action and call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
-                        <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline">{{ call_to_action.secondary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-outline">Collaboration Portal</button>
-                    {% endif %}
-                </div>
+                {% if call_to_action %}
+                    <div class="flex flex-wrap gap-4">
+                        {% if call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                            <a href="{{ call_to_action.primary_button_url }}" class="btn-primary">{{ call_to_action.primary_button_text }}</a>
+                        {% endif %}
+                        {% if call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline">{{ call_to_action.secondary_button_text }}</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>

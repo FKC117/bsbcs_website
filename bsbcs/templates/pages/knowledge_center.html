@@ -25,22 +25,20 @@
                     <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Knowledge Center</h1>
                 {% endif %}
                 {% if hero and hero.subtitle %}
-                    <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">{{ hero.subtitle }}</p>
+                    <p class="text-lg md:text-xl text-text-secondary mb-12 leading-relaxed">{{ hero.subtitle }}</p>
                 {% else %}
-                    <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">Access evidence-based clinical guidelines, research publications, educational materials, and professional development resources designed to advance breast cancer care excellence.</p>
+                    <p class="text-lg md:text-xl text-text-secondary mb-12 leading-relaxed">Access evidence-based clinical guidelines, research publications, educational materials, and professional development resources designed to advance breast cancer care excellence.</p>
                 {% endif %}
-                <div class="mb-8 flex flex-wrap gap-4">
-                    {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
-                        <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-primary inline-block">Explore Resources</button>
-                    {% endif %}
-                    {% if call_to_action and call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
-                        <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
-                    {% else %}
-                        <button class="btn-outline inline-block">Submit Content</button>
-                    {% endif %}
-                </div>
+                {% if call_to_action %}
+                    <div class="mb-8 flex flex-wrap gap-4">
+                        {% if call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                            <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
+                        {% endif %}
+                        {% if call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <!-- Search Bar -->
                 <div class="bg-surface rounded-lg shadow-lg p-2 flex items-center gap-2 max-w-2xl">
                     <svg class="w-6 h-6 text-text-tertiary ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
