@@ -25,21 +25,25 @@
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
                     {% if site_settings and site_settings.logo %}
-                        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name|default:'BSBCS' }} logo" class="w-12 h-12 object-contain">
-                        <div>
-                            <h1 class="text-xl font-headline font-bold text-primary">{{ site_settings.site_name|default:'BSBCS' }}</h1>
-                            <p class="text-xs text-text-secondary">{{ site_settings.abbreviation|default:'Breast Cancer Studies' }}</p>
-                        </div>
+                        <a href="{% url 'homepage' %}" class="flex items-center gap-3">
+                            <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name|default:'BSBCS' }} logo" class="w-12 h-12 object-contain">
+                            <div>
+                                <h1 class="text-xl font-headline font-bold text-primary">{{ site_settings.site_name|default:'BSBCS' }}</h1>
+                                <p class="text-xs text-text-secondary">{{ site_settings.abbreviation|default:'Breast Cancer Studies' }}</p>
+                            </div>
+                        </a>
                     {% else %}
-                        <svg class="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M24 4C20.5 4 17.5 6.5 17.5 10C17.5 12 18.5 13.8 20 15C15 16 11 20.5 11 26C11 32.6 16.4 38 23 38H25C31.6 38 37 32.6 37 26C37 20.5 33 16 28 15C29.5 13.8 30.5 12 30.5 10C30.5 6.5 27.5 4 24 4Z" fill="#E91E63"/>
-                            <path d="M24 40C24 40 20 42 20 44C20 45.1 20.9 46 22 46H26C27.1 46 28 45.1 28 44C28 42 24 40 24 40Z" fill="#1976D2"/>
-                            <circle cx="24" cy="24" r="3" fill="#00695C"/>
-                        </svg>
-                        <div>
-                            <h1 class="text-xl font-headline font-bold text-primary">BSBCS</h1>
-                            <p class="text-xs text-text-secondary">Breast Cancer Studies</p>
-                        </div>
+                        <a href="{% url 'homepage' %}" class="flex items-center gap-3">
+                            <svg class="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 4C20.5 4 17.5 6.5 17.5 10C17.5 12 18.5 13.8 20 15C15 16 11 20.5 11 26C11 32.6 16.4 38 23 38H25C31.6 38 37 32.6 37 26C37 20.5 33 16 28 15C29.5 13.8 30.5 12 30.5 10C30.5 6.5 27.5 4 24 4Z" fill="#E91E63"/>
+                                <path d="M24 40C24 40 20 42 20 44C20 45.1 20.9 46 22 46H26C27.1 46 28 45.1 28 44C28 42 24 40 24 40Z" fill="#1976D2"/>
+                                <circle cx="24" cy="24" r="3" fill="#00695C"/>
+                            </svg>
+                            <div>
+                                <h1 class="text-xl font-headline font-bold text-primary">BSBCS</h1>
+                                <p class="text-xs text-text-secondary">Breast Cancer Studies</p>
+                            </div>
+                        </a>
                     {% endif %}
                 </div>
 
@@ -98,41 +102,49 @@
     <!-- Footer -->
     <footer class="bg-text-primary text-white">
         <div class="container-custom py-12">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
                 <!-- Footer Column 1: Logo & description -->
                 <div>
                     <div class="flex items-center gap-3 mb-4">
                         {% if site_settings and site_settings.logo %}
-                            <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name|default:'BSBCS' }} logo" class="w-10 h-10 object-contain">
+                            <a href="{% url 'homepage' %}" class="flex items-center gap-3">
+                                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name|default:'BSBCS' }} logo" class="w-10 h-10 object-contain">
+                                <div>
+                                    <h3 class="text-lg font-headline font-bold text-white">{{ site_settings.site_name|default:'BSBCS' }}</h3>
+                                    <p class="text-xs text-gray-400">{{ site_settings.abbreviation|default:'Breast Cancer Studies' }}</p>
+                                </div>
+                            </a>
                         {% else %}
-                            <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 4C20.5 4 17.5 6.5 17.5 10C17.5 12 18.5 13.8 20 15C15 16 11 20.5 11 26C11 32.6 16.4 38 23 38H25C31.6 38 37 32.6 37 26C37 20.5 33 16 28 15C29.5 13.8 30.5 12 30.5 10C30.5 6.5 27.5 4 24 4Z" fill="#E91E63"/>
-                                <path d="M24 40C24 40 20 42 20 44C20 45.1 20.9 46 22 46H26C27.1 46 28 45.1 28 44C28 42 24 40 24 40Z" fill="#1976D2"/>
-                                <circle cx="24" cy="24" r="3" fill="#00695C"/>
-                            </svg>
+                            <a href="{% url 'homepage' %}" class="flex items-center gap-3">
+                                <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 4C20.5 4 17.5 6.5 17.5 10C17.5 12 18.5 13.8 20 15C15 16 11 20.5 11 26C11 32.6 16.4 38 23 38H25C31.6 38 37 32.6 37 26C37 20.5 33 16 28 15C29.5 13.8 30.5 12 30.5 10C30.5 6.5 27.5 4 24 4Z" fill="#E91E63"/>
+                                    <path d="M24 40C24 40 20 42 20 44C20 45.1 20.9 46 22 46H26C27.1 46 28 45.1 28 44C28 42 24 40 24 40Z" fill="#1976D2"/>
+                                    <circle cx="24" cy="24" r="3" fill="#00695C"/>
+                                </svg>
+                                <div>
+                                    <h3 class="text-lg font-headline font-bold text-white">{{ site_settings.site_name|default:'BSBCS' }}</h3>
+                                    <p class="text-xs text-gray-400">{{ site_settings.abbreviation|default:'Breast Cancer Studies' }}</p>
+                                </div>
+                            </a>
                         {% endif %}
-                        <div>
-                            <h3 class="text-lg font-headline font-bold text-white">{{ site_settings.site_name|default:'BSBCS' }}</h3>
-                            <p class="text-xs text-gray-400">{{ site_settings.abbreviation|default:'Breast Cancer Studies' }}</p>
-                        </div>
                     </div>
                     <p class="text-sm text-gray-400 leading-relaxed">{{ site_settings.footer_content|default:'Advancing breast cancer care through collaborative excellence, research, and education.' }}</p>
                 </div>
 
-                {% if navigation_links %}
-                    <div>
-                        <h4 class="font-headline font-semibold mb-4 text-white">Menu</h4>
-                        <ul class="space-y-2 text-sm">
-                            {% for nav in navigation_links %}
-                                <li><a href="{{ nav.url }}" class="text-gray-400 hover:text-white transition-colors">{{ nav.label }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
+                <div>
+                    <h4 class="font-headline font-semibold mb-4 text-white text-sm">Menu</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/knowledge-center" class="text-gray-400 hover:text-white transition-colors">Knowledge Center</a></li>
+                        <li><a href="/members" class="text-gray-400 hover:text-white transition-colors">Members</a></li>
+                        <li><a href="/research" class="text-gray-400 hover:text-white transition-colors">Research</a></li>
+                    </ul>
+                </div>
 
                 <!-- Footer Column 2 -->
                 <div>
-                    <h4 class="font-headline font-semibold mb-4 text-white">Contact</h4>
+                    <h4 class="font-headline font-semibold mb-4 text-white text-sm">Contact</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
                         {% if site_settings and site_settings.location %}
                             <li class="flex items-start gap-2">
@@ -183,6 +195,15 @@
                         {% endif %}
                     </ul>
                 </div>
+
+                <!-- Footer Column 4: Sitemap (static) -->
+                <div>
+                    <h4 class="font-headline font-semibold mb-4 text-white text-sm">Sitemap</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Sitemap</a></li>
+                    </ul>
+                </div>
+
             </div>
 
             <!-- Footer Bottom -->
