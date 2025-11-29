@@ -8,6 +8,9 @@ class SiteSettings(models.Model):
     logo = models.ImageField(upload_to='site_settings/', blank=True, null=True)
     favicon = models.ImageField(upload_to='site_settings/', blank=True, null=True)
     footer_content = models.TextField(blank=True, null=True)
+    contact_mail = models.EmailField(blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
+    phone_number = models.CharField(max_length=50, blank=True, null=True)
     footer_copyright = models.CharField(max_length=255, blank=True, null=True)
     facebook_url = models.URLField(blank=True, null=True)
     twitter_url = models.URLField(blank=True, null=True)
@@ -30,30 +33,6 @@ class NavigationLink(models.Model):
 
     def __str__(self):
         return self.label
-
-    class Meta:
-        ordering = ['order']
-
-
-class FooterColumn(models.Model):
-    title = models.CharField(max_length=100)
-    order = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ['order']
-
-
-class FooterLink(models.Model):
-    footer_column = models.ForeignKey(FooterColumn, on_delete=models.CASCADE, related_name='links')
-    label = models.CharField(max_length=100)
-    url = models.URLField(blank=True, null=True)
-    order = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.footer_column.title} - {self.label}"
 
     class Meta:
         ordering = ['order']

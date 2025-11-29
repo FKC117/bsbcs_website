@@ -14,7 +14,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, NavigationLink, FooterColumn, FooterLink
+    Webinar, Member, NavigationLink
 )
 
 
@@ -33,7 +33,6 @@ def homepage(request):
     # so content managers can update the hero CTA by creating a new entry.
     call_to_action = CallToAction.objects.filter(page='homepage').order_by('-id').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
@@ -46,7 +45,6 @@ def homepage(request):
         'events': events,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/homepage.html', context)
 
@@ -59,7 +57,6 @@ def about(request):
     awards = Award.objects.all().order_by('order', '-year')
     call_to_action = CallToAction.objects.filter(page='about').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
@@ -69,7 +66,6 @@ def about(request):
         'awards': awards,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/about.html', context)
 
@@ -81,7 +77,6 @@ def knowledge_center(request):
     webinars = Webinar.objects.all().order_by('order')
     call_to_action = CallToAction.objects.filter(page='knowledge_center').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
@@ -90,7 +85,6 @@ def knowledge_center(request):
         'webinars': webinars,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/knowledge_center.html', context)
 
@@ -100,14 +94,12 @@ def member_directory(request):
     members = Member.objects.all().order_by('order')
     call_to_action = CallToAction.objects.filter(page='member_directory').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
         'members': members,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/member_directory.html', context)
 
@@ -118,7 +110,6 @@ def news_and_updates(request):
     events = Event.objects.all().order_by('order', 'date')
     call_to_action = CallToAction.objects.filter(page='news_and_updates').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
@@ -126,7 +117,6 @@ def news_and_updates(request):
         'events': events,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/news_and_updates.html', context)
 
@@ -137,7 +127,6 @@ def research_and_publications(request):
     annual_reports = AnnualReport.objects.all().order_by('-year')
     call_to_action = CallToAction.objects.filter(page='research_and_publications').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
-    footer_columns = FooterColumn.objects.all().order_by('order').prefetch_related('links')
 
     context = {
         'hero': hero,
@@ -145,6 +134,5 @@ def research_and_publications(request):
         'annual_reports': annual_reports,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
-        'footer_columns': footer_columns,
     }
     return render(request, 'pages/research_and_publications.html', context)

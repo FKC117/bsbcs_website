@@ -4,7 +4,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, Tag, FooterColumn, FooterLink, NavigationLink
+    Webinar, Member, Tag, NavigationLink
 )
 
 # HeroSection and related CarouselItems
@@ -145,21 +145,6 @@ class MemberAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
-
-
-@admin.register(FooterColumn)
-class FooterColumnAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order')
-    ordering = ('order',)
-    search_fields = ('title',)
-
-
-@admin.register(FooterLink)
-class FooterLinkAdmin(admin.ModelAdmin):
-    list_display = ('label', 'footer_column', 'order')
-    list_filter = ('footer_column',)
-    ordering = ('order',)
-    search_fields = ('label',)
 
 
 @admin.register(NavigationLink)
