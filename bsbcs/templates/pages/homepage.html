@@ -25,14 +25,10 @@
                                             </svg>
                                             <span class="font-semibold">{{ item.badge_text|default:"" }}</span>
                                         </div>
-                                        {% if item.title %}
-                                            <h2 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">{{ item.title }}</h2>
-                                        {% elif hero and hero.title %}
+                                        {% if hero and hero.title %}
                                             <h2 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">{{ hero.title }}</h2>
                                         {% endif %}
-                                        {% if item.description %}
-                                            <p class="text-lg text-text-secondary mb-8 leading-relaxed">{{ item.description }}</p>
-                                        {% elif hero and hero.subtitle %}
+                                        {% if hero and hero.subtitle %}
                                             <p class="text-lg text-text-secondary mb-8 leading-relaxed">{{ hero.subtitle }}</p>
                                         {% endif %}
                                         <div class="flex flex-wrap gap-4">

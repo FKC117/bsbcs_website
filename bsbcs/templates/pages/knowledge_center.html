@@ -11,7 +11,6 @@
                 <path d="M0 250C200 150 400 350 600 250C800 150 1000 350 1200 250V400H0V250Z" fill="#00695C" opacity="0.5"/>
             </svg>
         </div>
-        
         <div class="container-custom relative z-10 py-16 md:py-20">
             <div class="max-w-4xl">
                 <div class="inline-flex items-center gap-2 bg-accent-100 text-accent-800 px-4 py-2 rounded-full mb-6">
@@ -20,9 +19,28 @@
                     </svg>
                     <span class="font-semibold">Comprehensive Resource Library</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Knowledge Center</h1>
-                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">Access evidence-based clinical guidelines, research publications, educational materials, and professional development resources designed to advance breast cancer care excellence.</p>
-                
+                {% if hero and hero.title %}
+                    <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">{{ hero.title }}</h1>
+                {% else %}
+                    <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Knowledge Center</h1>
+                {% endif %}
+                {% if hero and hero.subtitle %}
+                    <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">{{ hero.subtitle }}</p>
+                {% else %}
+                    <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">Access evidence-based clinical guidelines, research publications, educational materials, and professional development resources designed to advance breast cancer care excellence.</p>
+                {% endif %}
+                <div class="mb-8 flex flex-wrap gap-4">
+                    {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                        <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
+                    {% else %}
+                        <button class="btn-primary inline-block">Explore Resources</button>
+                    {% endif %}
+                    {% if call_to_action and call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                        <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
+                    {% else %}
+                        <button class="btn-outline inline-block">Submit Content</button>
+                    {% endif %}
+                </div>
                 <!-- Search Bar -->
                 <div class="bg-surface rounded-lg shadow-lg p-2 flex items-center gap-2 max-w-2xl">
                     <svg class="w-6 h-6 text-text-tertiary ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -510,37 +528,17 @@
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
-                <!-- Case Study 1 -->
-                <div class="card hover-lift hover-shadow">
-                    <div class="highlight-primary mb-4">
-                        <span class="text-sm font-semibold text-primary">Case Study</span>
+                            <!-- Search Bar -->
+                            <div class="bg-surface rounded-lg shadow-lg p-2 flex items-center gap-2 max-w-2xl">
+                                <svg class="w-6 h-6 text-text-tertiary ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <!-- ...existing code... -->
+                                </svg>
+                                <input type="text" id="resourceSearch" placeholder="Search resources, guidelines, tools..." class="flex-1 px-4 py-3 border-0 focus:outline-none focus:ring-0 bg-transparent text-text-primary">
+                                <button class="btn-primary">Search</button>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-3">Multidisciplinary Tumor Board Implementation</h3>
-                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">Step-by-step guide to establishing effective multidisciplinary breast cancer care teams with measurable outcomes.</p>
-                    <div class="flex items-center gap-2 text-xs text-text-tertiary mb-4">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Published: Nov 2025</span>
-                        <span>•</span>
-                        <span>15 min read</span>
-                    </div>
-                    <button class="text-primary font-semibold text-sm hover:text-primary-700 transition-colors inline-flex items-center gap-1">
-                        Read Case Study
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Case Study 2 -->
-                <div class="card hover-lift hover-shadow">
-                    <div class="highlight-secondary mb-4">
-                        <span class="text-sm font-semibold text-secondary">Case Study</span>
-                    </div>
-                    <h3 class="text-lg font-headline font-semibold text-text-primary mb-3">Patient Navigation Program Success Story</h3>
-                    <p class="text-sm text-text-secondary mb-4 leading-relaxed">How a comprehensive patient navigation program improved treatment adherence and outcomes by 40%.</p>
-                    <div class="flex items-center gap-2 text-xs text-text-tertiary mb-4">
+                </section>
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                         </svg>

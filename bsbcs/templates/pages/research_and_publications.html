@@ -16,15 +16,31 @@
             <div class="max-w-4xl">
                 <div class="inline-flex items-center gap-2 bg-secondary-100 text-secondary-800 px-4 py-2 rounded-full mb-6">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                        <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/>
                     </svg>
                     <span class="font-semibold">Evidence-Based Research</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Research & Publications</h1>
-                <p class="text-lg text-text-secondary leading-relaxed mb-8">Advancing breast cancer care through rigorous scientific inquiry. Explore our comprehensive database of peer-reviewed publications, ongoing research projects, and collaboration opportunities that drive innovation in treatment and patient outcomes.</p>
+                {% if hero and hero.title %}
+                    <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">{{ hero.title }}</h1>
+                {% else %}
+                    <h1 class="text-4xl md:text-5xl font-headline font-bold text-text-primary mb-6">Research & Publications</h1>
+                {% endif %}
+                {% if hero and hero.subtitle %}
+                    <p class="text-lg text-text-secondary leading-relaxed mb-8">{{ hero.subtitle }}</p>
+                {% else %}
+                    <p class="text-lg text-text-secondary leading-relaxed mb-8">Advancing breast cancer care through rigorous scientific inquiry. Explore our comprehensive database of peer-reviewed publications, ongoing research projects, and collaboration opportunities that drive innovation in treatment and patient outcomes.</p>
+                {% endif %}
                 <div class="flex flex-wrap gap-4">
-                    <button class="btn-primary">Submit Research</button>
-                    <button class="btn-outline">Collaboration Portal</button>
+                    {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                        <a href="{{ call_to_action.primary_button_url }}" class="btn-primary">{{ call_to_action.primary_button_text }}</a>
+                    {% else %}
+                        <button class="btn-primary">Submit Research</button>
+                    {% endif %}
+                    {% if call_to_action and call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                        <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline">{{ call_to_action.secondary_button_text }}</a>
+                    {% else %}
+                        <button class="btn-outline">Collaboration Portal</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
