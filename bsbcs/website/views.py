@@ -51,6 +51,7 @@ def homepage(request):
 
 def about(request):
     hero = HeroSection.objects.filter(page='about').first()
+    stats_counters = StatisticCounter.objects.filter(page='about').order_by('order')
     board_members = BoardMember.objects.all().order_by('order')
     committees = Committee.objects.all().order_by('order')
     partnerships = Partnership.objects.all().order_by('order')
@@ -60,6 +61,7 @@ def about(request):
 
     context = {
         'hero': hero,
+        'stats_counters': stats_counters,
         'board_members': board_members,
         'committees': committees,
         'partnerships': partnerships,
@@ -123,6 +125,7 @@ def news_and_updates(request):
 
 def research_and_publications(request):
     hero = HeroSection.objects.filter(page='research_and_publications').first()
+    stats_counters = StatisticCounter.objects.filter(page='research_and_publications').order_by('order')
     research_highlights = ResearchHighlight.objects.all().order_by('order')
     annual_reports = AnnualReport.objects.all().order_by('-year')
     call_to_action = CallToAction.objects.filter(page='research_and_publications').first()
@@ -130,6 +133,7 @@ def research_and_publications(request):
 
     context = {
         'hero': hero,
+        'stats_counters': stats_counters,
         'research_highlights': research_highlights,
         'annual_reports': annual_reports,
         'call_to_action': call_to_action,
