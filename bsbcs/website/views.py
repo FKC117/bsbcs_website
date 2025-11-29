@@ -25,7 +25,8 @@ def homepage(request):
     quick_access_cards = QuickAccessCard.objects.filter(page='homepage').order_by('order')
     stats_counters = StatisticCounter.objects.filter(page='homepage').order_by('order')
     member_spotlights = MemberSpotlight.objects.filter(is_featured=True).order_by('order')
-    research_highlights = ResearchHighlight.objects.all().order_by('order')
+    # Only show highlights flagged for homepage (highlight=True)
+    research_highlights = ResearchHighlight.objects.filter(highlight=True).order_by('order')
     events = Event.objects.all().order_by('order', 'date')
     # Use the latest CallToAction entry for homepage (most recent).
     # We keep the model's order field available but prefer the latest DB entry

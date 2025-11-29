@@ -213,52 +213,67 @@
                 <h2 class="text-3xl md:text-4xl font-headline font-bold mb-4">Our Impact in Numbers</h2>
                 <p class="text-lg text-primary-100">Advancing breast cancer care through collaborative excellence</p>
             </div>
-            
+
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Stat 1 -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                        </svg>
+                {% if stats_counters and stats_counters.exists %}
+                    {% for stat in stats_counters %}
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                                {% if stat.icon_svg %}
+                                    <img src="{{ stat.icon_svg.url }}" alt="{{ stat.title }} icon" class="w-8 h-8 object-contain">
+                                {% else %}
+                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                    </svg>
+                                {% endif %}
+                            </div>
+                            <p class="text-4xl font-bold mb-2">{{ stat.count_text }}</p>
+                            <p class="text-primary-100">{{ stat.title }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Static fallback -->
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                        </div>
+                        <p class="text-4xl font-bold mb-2">2,500+</p>
+                        <p class="text-primary-100">Active Members</p>
                     </div>
-                    <p class="text-4xl font-bold mb-2">2,500+</p>
-                    <p class="text-primary-100">Active Members</p>
-                </div>
 
-                <!-- Stat 2 -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
-                        </svg>
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <p class="text-4xl font-bold mb-2">1,200+</p>
+                        <p class="text-primary-100">Research Publications</p>
                     </div>
-                    <p class="text-4xl font-bold mb-2">1,200+</p>
-                    <p class="text-primary-100">Research Publications</p>
-                </div>
 
-                <!-- Stat 3 -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
-                        </svg>
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                            </svg>
+                        </div>
+                        <p class="text-4xl font-bold mb-2">85+</p>
+                        <p class="text-primary-100">Annual Events</p>
                     </div>
-                    <p class="text-4xl font-bold mb-2">85+</p>
-                    <p class="text-primary-100">Annual Events</p>
-                </div>
 
-                <!-- Stat 4 -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <p class="text-4xl font-bold mb-2">50,000+</p>
+                        <p class="text-primary-100">Patients Impacted</p>
                     </div>
-                    <p class="text-4xl font-bold mb-2">50,000+</p>
-                    <p class="text-primary-100">Patients Impacted</p>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -272,56 +287,80 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Member Card 1 -->
-                <div class="card hover-lift hover-shadow">
-                    <div class="relative mb-6 overflow-hidden rounded-lg">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_155748a5d-1763296653785.png" alt="Dr. Fatima Rahman, Medical Oncologist specializing in breast cancer treatment" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
-                        <div class="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
-                            Featured
+                {% if member_spotlights and member_spotlights.exists %}
+                    {% for member in member_spotlights %}
+                        <div class="card hover-lift hover-shadow">
+                            <div class="relative mb-6 overflow-hidden rounded-lg">
+                                {% if member.image_url %}
+                                    <img src="{{ member.image_url.url }}" alt="{{ member.name }}, {{ member.title }}" class="w-full h-64 object-cover" loading="lazy">
+                                {% else %}
+                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2940&auto=format&fit=crop" alt="{{ member.name }}, {{ member.title }}" class="w-full h-64 object-cover" loading="lazy">
+                                {% endif %}
+                                <div class="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                    Featured
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">{{ member.name }}</h3>
+                            <p class="text-sm text-secondary font-semibold mb-3">{{ member.title }}</p>
+                            <p class="text-text-secondary mb-4 leading-relaxed">{{ member.description }}</p>
+                            <a href="{% if member.profile_url %}{{ member.profile_url }}{% else %}{% url 'member_directory' %}{% endif %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                                View Profile
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Static fallback -->
+                    <div class="card hover-lift hover-shadow">
+                        <div class="relative mb-6 overflow-hidden rounded-lg">
+                            <img src="https://img.rocket.new/generatedImages/rocket_gen_img_155748a5d-1763296653785.png" alt="Dr. Fatima Rahman, Medical Oncologist specializing in breast cancer treatment" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                            <div class="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                Featured
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Fatima Rahman</h3>
+                        <p class="text-sm text-secondary font-semibold mb-3">Medical Oncologist</p>
+                        <p class="text-text-secondary mb-4 leading-relaxed">Pioneering research in targeted therapy for triple-negative breast cancer, with 15+ years of clinical excellence.</p>
+                        <a href="{% url 'member_directory' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                            View Profile
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Fatima Rahman</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">Medical Oncologist</p>
-                    <p class="text-text-secondary mb-4 leading-relaxed">Pioneering research in targeted therapy for triple-negative breast cancer, with 15+ years of clinical excellence.</p>
-                    <a href="member_directory.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
-                        View Profile
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
 
-                <!-- Member Card 2 -->
-                <div class="card hover-lift hover-shadow">
-                    <div class="relative mb-6 overflow-hidden rounded-lg">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_136bb23e3-1763295283704.png" alt="Dr. Ahmed Hassan, Surgical Oncologist with expertise in breast reconstruction" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
+                    <div class="card hover-lift hover-shadow">
+                        <div class="relative mb-6 overflow-hidden rounded-lg">
+                            <img src="https://img.rocket.new/generatedImages/rocket_gen_img_136bb23e3-1763295283704.png" alt="Dr. Ahmed Hassan, Surgical Oncologist with expertise in breast reconstruction" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
+                        </div>
+                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Ahmed Hassan</h3>
+                        <p class="text-sm text-secondary font-semibold mb-3">Surgical Oncologist</p>
+                        <p class="text-text-secondary mb-4 leading-relaxed">Leading expert in minimally invasive breast surgery techniques, advancing patient recovery outcomes.</p>
+                        <a href="{% url 'member_directory' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                            View Profile
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Ahmed Hassan</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">Surgical Oncologist</p>
-                    <p class="text-text-secondary mb-4 leading-relaxed">Leading expert in minimally invasive breast surgery techniques, advancing patient recovery outcomes.</p>
-                    <a href="member_directory.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
-                        View Profile
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
 
-                <!-- Member Card 3 -->
-                <div class="card hover-lift hover-shadow">
-                    <div class="relative mb-6 overflow-hidden rounded-lg">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_149b83e86-1763299871782.png" alt="Dr. Nusrat Jahan, Radiologist specializing in breast imaging and early detection" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                    <div class="card hover-lift hover-shadow">
+                        <div class="relative mb-6 overflow-hidden rounded-lg">
+                            <img src="https://img.rocket.new/generatedImages/rocket_gen_img_149b83e86-1763299871782.png" alt="Dr. Nusrat Jahan, Radiologist specializing in breast imaging and early detection" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                        </div>
+                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Nusrat Jahan</h3>
+                        <p class="text-sm text-secondary font-semibold mb-3">Radiologist</p>
+                        <p class="text-text-secondary mb-4 leading-relaxed">Advancing early detection through AI-enhanced imaging technology, improving diagnostic accuracy.</p>
+                        <a href="{% url 'member_directory' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                            View Profile
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Dr. Nusrat Jahan</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">Radiologist</p>
-                    <p class="text-text-secondary mb-4 leading-relaxed">Advancing early detection through AI-enhanced imaging technology, improving diagnostic accuracy.</p>
-                    <a href="member_directory.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
-                        View Profile
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -334,53 +373,103 @@
                     <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Latest Research Highlights</h2>
                     <p class="text-lg text-text-secondary">Breakthrough studies advancing breast cancer treatment</p>
                 </div>
-                <a href="research_and_publications.html" class="btn-primary mt-4 md:mt-0">View All Research</a>
+                <a href="{% url 'research_and_publications' %}" class="btn-primary mt-4 md:mt-0">View All Research</a>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Research Card 1 -->
-                <div class="card-elevated">
-                    <div class="highlight-secondary mb-4">
-                        <span class="text-sm font-semibold text-secondary">Published: November 2025</span>
-                    </div>
-                    <h3 class="text-2xl font-headline font-semibold text-text-primary mb-3">Novel Immunotherapy Approach Shows 40% Improvement in Treatment Response</h3>
-                    <p class="text-text-secondary mb-4 leading-relaxed">Groundbreaking multi-center study demonstrates significant efficacy in combination therapy for HER2-positive breast cancer patients.</p>
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1d5d37b99-1763297511363.png" alt="Lead researcher Dr. Sarah Ahmed" class="w-12 h-12 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div>
-                            <p class="font-semibold text-text-primary">Dr. Sarah Ahmed</p>
-                            <p class="text-sm text-text-secondary">Lead Researcher</p>
-                        </div>
-                    </div>
-                    <a href="research_and_publications.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
-                        Read Full Study
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
+                {% if research_highlights and research_highlights.exists %}
+                    {% for highlight in research_highlights|slice:":2" %}
+                        <div class="card-elevated">
+                            <div class="{% cycle 'highlight-secondary' 'highlight-accent' %} mb-4">
+                                {% if highlight.published_date %}
+                                    <span class="text-sm font-semibold {% cycle 'text-secondary' 'text-accent' %}">Published: {{ highlight.published_date|date:"F Y" }}</span>
+                                {% endif %}
+                            </div>
+                            <h3 class="text-2xl font-headline font-semibold text-text-primary mb-3">{{ highlight.title }}</h3>
+                            <p class="text-text-secondary mb-4 leading-relaxed">{{ highlight.description }}</p>
+                            {% if highlight.lead_researcher_name %}
+                                <div class="flex items-center gap-4 mb-4">
+                                    {% if highlight.lead_researcher_image_url %}
+                                        <img src="{{ highlight.lead_researcher_image_url.url }}" alt="{{ highlight.lead_researcher_name }}" class="w-12 h-12 rounded-full object-cover" loading="lazy">
+                                    {% else %}
+                                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop" alt="{{ highlight.lead_researcher_name }}" class="w-12 h-12 rounded-full object-cover" loading="lazy">
+                                    {% endif %}
+                                    <div>
+                                        <p class="font-semibold text-text-primary">{{ highlight.lead_researcher_name }}</p>
+                                        <p class="text-sm text-text-secondary">Lead Researcher</p>
+                                    </div>
+                                </div>
+                            {% endif %}
 
-                <!-- Research Card 2 -->
-                <div class="card-elevated">
-                    <div class="highlight-accent mb-4">
-                        <span class="text-sm font-semibold text-accent">Published: October 2025</span>
-                    </div>
-                    <h3 class="text-2xl font-headline font-semibold text-text-primary mb-3">AI-Powered Early Detection System Achieves 95% Accuracy Rate</h3>
-                    <p class="text-text-secondary mb-4 leading-relaxed">Revolutionary machine learning algorithm enhances mammography interpretation, reducing false positives and improving early-stage detection.</p>
-                    <div class="flex items-center gap-4 mb-4">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1f32fdbd6-1763299989311.png" alt="Lead researcher Dr. Kamal Hossain" class="w-12 h-12 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
-                        <div>
-                            <p class="font-semibold text-text-primary">Dr. Kamal Hossain</p>
-                            <p class="text-sm text-text-secondary">Principal Investigator</p>
+                            {% comment %} Prefer `journal_link` (external) then `profile_url`, then fallback to research listing {% endcomment %}
+                            {% if highlight.journal_link %}
+                                <a href="{{ highlight.journal_link }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                                    Read in {{ highlight.journal_name|default:'Journal' }}
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            {% elif highlight.profile_url %}
+                                <a href="{{ highlight.profile_url }}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                                    Read Full Study
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'research_and_publications' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                                    Read Full Study
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Static fallback -->
+                    <div class="card-elevated">
+                        <div class="highlight-secondary mb-4">
+                            <span class="text-sm font-semibold text-secondary">Published: November 2025</span>
+                        </div>
+                        <h3 class="text-2xl font-headline font-semibold text-text-primary mb-3">Novel Immunotherapy Approach Shows 40% Improvement in Treatment Response</h3>
+                        <p class="text-text-secondary mb-4 leading-relaxed">Groundbreaking multi-center study demonstrates significant efficacy in combination therapy for HER2-positive breast cancer patients.</p>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1d5d37b99-1763297511363.png" alt="Lead researcher Dr. Sarah Ahmed" class="w-12 h-12 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
+                            <div>
+                                <p class="font-semibold text-text-primary">Dr. Sarah Ahmed</p>
+                                <p class="text-sm text-text-secondary">Lead Researcher</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'research_and_publications' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                            Read Full Study
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
-                    <a href="research_and_publications.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
-                        Read Full Study
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
+
+                    <div class="card-elevated">
+                        <div class="highlight-accent mb-4">
+                            <span class="text-sm font-semibold text-accent">Published: October 2025</span>
+                        </div>
+                        <h3 class="text-2xl font-headline font-semibold text-text-primary mb-3">AI-Powered Early Detection System Achieves 95% Accuracy Rate</h3>
+                        <p class="text-text-secondary mb-4 leading-relaxed">Revolutionary machine learning algorithm enhances mammography interpretation, reducing false positives and improving early-stage detection.</p>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1f32fdbd6-1763299989311.png" alt="Lead researcher Dr. Kamal Hossain" class="w-12 h-12 rounded-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
+                            <div>
+                                <p class="font-semibold text-text-primary">Dr. Kamal Hossain</p>
+                                <p class="text-sm text-text-secondary">Principal Investigator</p>
+                            </div>
+                        </div>
+                        <a href="{% url 'research_and_publications' %}" class="inline-flex items-center text-primary font-semibold hover:text-primary-700 transition-colors">
+                            Read Full Study
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -492,8 +581,17 @@
                 <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6">Join the Fight Against Breast Cancer</h2>
                 <p class="text-lg text-secondary-100 mb-8 leading-relaxed">Become part of Bangladesh's premier medical society dedicated to advancing breast cancer research, education, and clinical excellence. Together, we're transforming patient outcomes.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white">Apply for Membership</button>
-                    <button class="btn bg-transparent border-2 border-white text-white hover:bg-white/10 focus:ring-white">Learn More</button>
+                    {% if call_to_action %}
+                        {% if call_to_action.primary_button_text %}
+                            <a href="{{ call_to_action.primary_button_url }}" class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white">{{ call_to_action.primary_button_text }}</a>
+                        {% endif %}
+                        {% if call_to_action.secondary_button_text %}
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn bg-transparent border-2 border-white text-white hover:bg-white/10 focus:ring-white">{{ call_to_action.secondary_button_text }}</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'member_directory' %}" class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white">Apply for Membership</a>
+                        <a href="{% url 'research_and_publications' %}" class="btn bg-transparent border-2 border-white text-white hover:bg-white/10 focus:ring-white">Learn More</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

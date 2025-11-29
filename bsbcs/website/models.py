@@ -162,7 +162,9 @@ class ResearchHighlight(models.Model):
     published_date = models.DateField(blank=True, null=True)
     lead_researcher_name = models.CharField(max_length=255, blank=True, null=True)
     lead_researcher_image_url = models.ImageField(upload_to='images/researchers/', blank=True, null=True)
-    profile_url = models.URLField(blank=True, null=True)
+    journal_name = models.CharField(max_length=255, blank=True, null=True)
+    journal_link = models.URLField(blank=True, null=True)    
+    highlight = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):

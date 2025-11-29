@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import (
+    SiteSettings,
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
@@ -166,3 +167,14 @@ class NavigationLinkAdmin(admin.ModelAdmin):
     list_display = ('label', 'url_name', 'order', 'is_active')
     ordering = ('order',)
     search_fields = ('label', 'url_name')
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ('site_name', 'abbreviation')
+    search_fields = ('site_name', 'abbreviation')
+
+    def has_add_permission(self, request):
+        # Allow only one SiteSettings instance via admin to keep it singleton-like
+        from .models import SiteSettings as SS
+        return not SS.objects.exists()
