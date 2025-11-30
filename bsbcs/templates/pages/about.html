@@ -69,69 +69,75 @@
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Mission Card -->
-                <div class="card-elevated hover-lift hover-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="p-4 bg-primary-50 rounded-lg">
-                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                            </svg>
+                {% if mission %}
+                    <div class="card-elevated hover-lift hover-shadow">
+                        <div class="flex items-center gap-4 mb-6">
+                            {% if mission.icon_svg %}
+                                <div class="p-4 bg-primary-50 rounded-lg">
+                                    <img src="{{ mission.icon_svg.url }}" alt="{{ mission.title }} icon" class="w-8 h-8 object-contain">
+                                </div>
+                            {% else %}
+                                <div class="p-4 bg-primary-50 rounded-lg">
+                                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            <h3 class="text-2xl font-headline font-semibold text-text-primary">{{ mission.title }}</h3>
                         </div>
-                        <h3 class="text-2xl font-headline font-semibold text-text-primary">Mission</h3>
+                        <p class="text-text-secondary leading-relaxed">{{ mission.description }}</p>
                     </div>
-                    <p class="text-text-secondary leading-relaxed">To advance breast cancer care in Bangladesh through evidence-based research, comprehensive education, and collaborative clinical excellence that transforms patient outcomes and saves lives.</p>
-                </div>
+                {% endif %}
 
                 <!-- Vision Card -->
-                <div class="card-elevated hover-lift hover-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="p-4 bg-secondary-50 rounded-lg">
-                            <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
+                {% if vision %}
+                    <div class="card-elevated hover-lift hover-shadow">
+                        <div class="flex items-center gap-4 mb-6">
+                            {% if vision.icon_svg %}
+                                <div class="p-4 bg-secondary-50 rounded-lg">
+                                    <img src="{{ vision.icon_svg.url }}" alt="{{ vision.title }} icon" class="w-8 h-8 object-contain">
+                                </div>
+                            {% else %}
+                                <div class="p-4 bg-secondary-50 rounded-lg">
+                                    <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            <h3 class="text-2xl font-headline font-semibold text-text-primary">{{ vision.title }}</h3>
                         </div>
-                        <h3 class="text-2xl font-headline font-semibold text-text-primary">Vision</h3>
+                        <p class="text-text-secondary leading-relaxed">{{ vision.description }}</p>
                     </div>
-                    <p class="text-text-secondary leading-relaxed">To be the leading authority in breast cancer care across South Asia, recognized internationally for innovative research, educational excellence, and patient-centered clinical practices.</p>
-                </div>
+                {% endif %}
 
                 <!-- Values Card -->
-                <div class="card-elevated hover-lift hover-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="p-4 bg-accent-50 rounded-lg">
-                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
+                {% if values %}
+                    <div class="card-elevated hover-lift hover-shadow">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="p-4 bg-accent-50 rounded-lg">
+                                {% if values_header_icon_url %}
+                                    <img src="{{ values_header_icon_url }}" alt="{{ values_header_title }} icon" class="w-8 h-8 object-contain">
+                                {% else %}
+                                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                {% endif %}
+                            </div>
+                            <h3 class="text-2xl font-headline font-semibold text-text-primary">{{ values_header_title }}</h3>
                         </div>
-                        <h3 class="text-2xl font-headline font-semibold text-text-primary">Values</h3>
+                        <ul class="space-y-3 text-text-secondary">
+                            {% for item in values_items %}
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>{{ item }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <ul class="space-y-3 text-text-secondary">
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Compassionate Expertise</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Scientific Rigor</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Collaborative Excellence</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Patient-Centered Care</span>
-                        </li>
-                    </ul>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>

@@ -4,7 +4,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, Tag, NavigationLink
+    Webinar, Member, Tag, NavigationLink, OrganizationalValue
 )
 
 # HeroSection and related CarouselItems
@@ -152,6 +152,14 @@ class NavigationLinkAdmin(admin.ModelAdmin):
     list_display = ('label', 'url_name', 'order', 'is_active')
     ordering = ('order',)
     search_fields = ('label', 'url_name')
+
+
+@admin.register(OrganizationalValue)
+class OrganizationalValueAdmin(admin.ModelAdmin):
+    list_display = ('title', 'value_type', 'order')
+    list_filter = ('value_type',)
+    ordering = ('value_type', 'order')
+    search_fields = ('title', 'description')
 
 
 @admin.register(SiteSettings)

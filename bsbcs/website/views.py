@@ -14,7 +14,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, NavigationLink
+    Webinar, Member, NavigationLink, OrganizationalValue
 )
 
 
@@ -58,6 +58,60 @@ def about(request):
     awards = Award.objects.all().order_by('order', '-year')
     call_to_action = CallToAction.objects.filter(page='about').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
+    
+    # Fetch organizational values grouped by type
+    mission = OrganizationalValue.objects.filter(value_type='mission').first()
+    vision = OrganizationalValue.objects.filter(value_type='vision').first()
+    values = OrganizationalValue.objects.filter(value_type='value').order_by('order')
+
+    # Prepare values_items for the template. If there are multiple `value` rows,
+    # use each row's title as an item. If there is a single `value` row which
+    # contains a multi-line description (e.g. authors pasted a list into the
+    # description field), split it into list items for rendering.
+    import re
+    values_items = []
+    if values.count() > 1:
+        for v in values:
+            # prefer the title for short list items, fallback to description
+            text = v.title or (v.description or '').strip()
+            if text:
+                values_items.append(text)
+    elif values.count() == 1:
+        single = values.first()
+        desc = (single.description or '').strip()
+        if desc:
+            # split on newlines first
+            parts = [p.strip() for p in re.split(r'[\r\n]+', desc) if p.strip()]
+            if len(parts) == 1:
+                # if still single, try splitting on common separators
+                parts = [p.strip() for p in re.split(r'[;\u2022,]+', desc) if p.strip()]
+            values_items = parts
+        else:
+            # no description, use the title as a single item
+            if single.title:
+                values_items = [single.title]
+    
+    # Determine a header title and icon for the Values card.
+    # Prefer an explicit "Values" meta row when present (title like 'Values' or 'Our Values').
+    values_header_title = 'Values'
+    values_header_icon_url = None
+    if values.exists():
+        # try to find a meta/header row
+        header = values.filter(title__iregex=r'^(values|our values?)$').first()
+        if header:
+            values_header_title = header.title
+            if header.icon_svg:
+                values_header_icon_url = header.icon_svg.url
+        else:
+            # no explicit header row: if there's a single row, use its title/icon as header
+            if values.count() == 1:
+                single = values.first()
+                values_header_title = single.title or values_header_title
+                if single.icon_svg:
+                    values_header_icon_url = single.icon_svg.url
+            else:
+                # multiple rows and no header candidate: leave generic title and no icon
+                values_header_title = 'Values'
 
     context = {
         'hero': hero,
@@ -68,6 +122,12 @@ def about(request):
         'awards': awards,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
+        'mission': mission,
+        'vision': vision,
+        'values': values,
+        'values_items': values_items,
+        'values_header_title': values_header_title,
+        'values_header_icon_url': values_header_icon_url,
     }
     return render(request, 'pages/about.html', context)
 

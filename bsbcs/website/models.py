@@ -362,3 +362,24 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OrganizationalValue(models.Model):
+    VALUE_TYPE_CHOICES = [
+        ('mission', 'Mission'),
+        ('vision', 'Vision'),
+        ('value', 'Value'),
+    ]
+
+    value_type = models.CharField(max_length=20, choices=VALUE_TYPE_CHOICES)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    icon_svg = models.ImageField(upload_to='images/icons/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.get_value_type_display()} - {self.title}"
+
+    class Meta:
+        ordering = ['value_type', 'order']
+        verbose_name_plural = "Organizational Values"
