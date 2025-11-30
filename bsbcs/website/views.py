@@ -14,7 +14,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, NavigationLink, OrganizationalValue
+    Webinar, Member, NavigationLink, OrganizationalValue, TimelineSection
 )
 
 
@@ -58,6 +58,12 @@ def about(request):
     awards = Award.objects.all().order_by('order', '-year')
     call_to_action = CallToAction.objects.filter(page='about').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
+    
+    # Fetch timeline section with ordered items
+    timeline_section = TimelineSection.objects.order_by('order').first()
+    timeline_items = []
+    if timeline_section:
+        timeline_items = list(timeline_section.items.all())
     
     # Fetch organizational values grouped by type
     mission = OrganizationalValue.objects.filter(value_type='mission').first()
@@ -128,6 +134,8 @@ def about(request):
         'values_items': values_items,
         'values_header_title': values_header_title,
         'values_header_icon_url': values_header_icon_url,
+        'timeline_section': timeline_section,
+        'timeline_items': timeline_items,
     }
     return render(request, 'pages/about.html', context)
 

@@ -383,3 +383,37 @@ class OrganizationalValue(models.Model):
     class Meta:
         ordering = ['value_type', 'order']
         verbose_name_plural = "Organizational Values"
+
+
+class TimelineSection(models.Model):
+    """A header section for the About page timeline.
+
+    Contains an optional intro and icon; `TimelineItem` children represent
+    individual timeline events ordered for display.
+    """
+
+    title = models.CharField(max_length=255)
+    intro = models.TextField(blank=True, null=True)
+    icon_svg = models.ImageField(upload_to='images/icons/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['order']
+
+
+class TimelineItem(models.Model):
+    section = models.ForeignKey(TimelineSection, on_delete=models.CASCADE, related_name='items')
+    event_date = models.DateField(blank=True, null=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    icon_svg = models.ImageField(upload_to='images/icons/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.section.title} - {self.title}"
+
+    class Meta:
+        ordering = ['order']

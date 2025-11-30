@@ -143,94 +143,72 @@
     </section>
 
     <!-- Timeline Section -->
+    {% if timeline_section and timeline_items %}
     <section class="section bg-primary-50">
         <div class="container-custom">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">Our Journey of Excellence</h2>
-                <p class="text-lg text-text-secondary">Milestones that shaped breast cancer care in Bangladesh</p>
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-text-primary mb-4">{{ timeline_section.title }}</h2>
+                {% if timeline_section.intro %}
+                <p class="text-lg text-text-secondary">{{ timeline_section.intro }}</p>
+                {% endif %}
             </div>
 
             <div class="max-w-4xl mx-auto">
-                <!-- Timeline Item 1 -->
-                <div class="relative pl-8 pb-12 border-l-4 border-primary">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-primary rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-primary">2010</span>
-                            <span class="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm font-semibold">Foundation</span>
+                {% for item in timeline_items %}
+                    {% if forloop.counter|divisibleby:3 %}
+                        <!-- Timeline Item - accent color -->
+                        <div class="relative pl-8 {% if not forloop.last %}pb-12{% endif %} border-l-4 border-accent">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-accent rounded-full border-4 border-surface"></div>
+                            <div class="card hover-lift hover-shadow">
+                                <div class="flex items-center gap-3 mb-3">
+                                    {% if item.event_date %}
+                                    <span class="text-2xl font-bold text-accent">{{ item.event_date|date:"Y" }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">{{ item.title }}</h3>
+                                {% if item.description %}
+                                <p class="text-text-secondary">{{ item.description }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Society Established</h3>
-                        <p class="text-text-secondary">Founded by 50 pioneering oncologists committed to advancing breast cancer care in Bangladesh through collaborative research and education.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item 2 -->
-                <div class="relative pl-8 pb-12 border-l-4 border-secondary">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-secondary rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-secondary">2013</span>
-                            <span class="px-3 py-1 bg-secondary-100 text-secondary-800 rounded-full text-sm font-semibold">Research</span>
+                    {% elif forloop.counter|divisibleby:2 %}
+                        <!-- Timeline Item - secondary color -->
+                        <div class="relative pl-8 {% if not forloop.last %}pb-12{% endif %} border-l-4 border-secondary">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-secondary rounded-full border-4 border-surface"></div>
+                            <div class="card hover-lift hover-shadow">
+                                <div class="flex items-center gap-3 mb-3">
+                                    {% if item.event_date %}
+                                    <span class="text-2xl font-bold text-secondary">{{ item.event_date|date:"Y" }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">{{ item.title }}</h3>
+                                {% if item.description %}
+                                <p class="text-text-secondary">{{ item.description }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">First National Research Initiative</h3>
-                        <p class="text-text-secondary">Launched comprehensive multi-center study on breast cancer prevalence and treatment outcomes across Bangladesh, establishing baseline data for future research.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item 3 -->
-                <div class="relative pl-8 pb-12 border-l-4 border-accent">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-accent rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-accent">2016</span>
-                            <span class="px-3 py-1 bg-accent-100 text-accent-800 rounded-full text-sm font-semibold">Recognition</span>
+                    {% else %}
+                        <!-- Timeline Item - primary color -->
+                        <div class="relative pl-8 {% if not forloop.last %}pb-12{% endif %} border-l-4 border-primary">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-primary rounded-full border-4 border-surface"></div>
+                            <div class="card hover-lift hover-shadow">
+                                <div class="flex items-center gap-3 mb-3">
+                                    {% if item.event_date %}
+                                    <span class="text-2xl font-bold text-primary">{{ item.event_date|date:"Y" }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">{{ item.title }}</h3>
+                                {% if item.description %}
+                                <p class="text-text-secondary">{{ item.description }}</p>
+                                {% endif %}
+                            </div>
                         </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">International Partnership</h3>
-                        <p class="text-text-secondary">Established formal collaboration with American Society of Clinical Oncology (ASCO), bringing international expertise to Bangladesh.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item 4 -->
-                <div class="relative pl-8 pb-12 border-l-4 border-primary">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-primary rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-primary">2019</span>
-                            <span class="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm font-semibold">Education</span>
-                        </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">National Training Program</h3>
-                        <p class="text-text-secondary">Launched comprehensive training program for healthcare professionals, reaching 1,000+ medical practitioners across Bangladesh.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item 5 -->
-                <div class="relative pl-8 pb-12 border-l-4 border-secondary">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-secondary rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-secondary">2022</span>
-                            <span class="px-3 py-1 bg-secondary-100 text-secondary-800 rounded-full text-sm font-semibold">Innovation</span>
-                        </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">AI Research Initiative</h3>
-                        <p class="text-text-secondary">Pioneered AI-powered early detection research, achieving 95% accuracy in mammography interpretation and setting new standards for diagnostic excellence.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline Item 6 -->
-                <div class="relative pl-8">
-                    <div class="absolute -left-3 top-0 w-6 h-6 bg-accent rounded-full border-4 border-surface"></div>
-                    <div class="card hover-lift hover-shadow">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-2xl font-bold text-accent">2025</span>
-                            <span class="px-3 py-1 bg-accent-100 text-accent-800 rounded-full text-sm font-semibold">Present</span>
-                        </div>
-                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-2">Leading Regional Authority</h3>
-                        <p class="text-text-secondary">Now serving 2,500+ members with 1,200+ research publications, recognized as South Asia's premier breast cancer research and education society.</p>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Leadership Section -->
     <section class="section">

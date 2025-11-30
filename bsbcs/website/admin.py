@@ -6,6 +6,7 @@ from .models import (
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
     Webinar, Member, Tag, NavigationLink, OrganizationalValue
 )
+from .models import TimelineSection, TimelineItem
 
 # HeroSection and related CarouselItems
 @admin.register(HeroSection)
@@ -160,6 +161,19 @@ class OrganizationalValueAdmin(admin.ModelAdmin):
     list_filter = ('value_type',)
     ordering = ('value_type', 'order')
     search_fields = ('title', 'description')
+
+
+class TimelineItemInline(admin.TabularInline):
+    model = TimelineItem
+    extra = 1
+    fields = ('event_date', 'title', 'description', 'order')
+
+
+@admin.register(TimelineSection)
+class TimelineSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
+    ordering = ('order',)
+    inlines = [TimelineItemInline]
 
 
 @admin.register(SiteSettings)
