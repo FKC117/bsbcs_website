@@ -16,6 +16,7 @@ from .models import (
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
     Webinar, Member, NavigationLink, OrganizationalValue, TimelineSection
 )
+from .models import ResearchInterestArea, Speciality
 
 
 def homepage(request):
@@ -162,12 +163,17 @@ def knowledge_center(request):
 def member_directory(request):
     hero = HeroSection.objects.filter(page='member_directory').first()
     members = Member.objects.all().order_by('order')
+    # Fetch specialties and research interest areas for the advanced filter dropdowns
+    specialities = Speciality.objects.all().order_by('name')
+    research_areas = ResearchInterestArea.objects.all().order_by('name')
     call_to_action = CallToAction.objects.filter(page='member_directory').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
 
     context = {
         'hero': hero,
         'members': members,
+        'specialities': specialities,
+        'research_areas': research_areas,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
     }

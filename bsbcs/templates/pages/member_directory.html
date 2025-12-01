@@ -84,14 +84,9 @@
                         <label class="form-label">Specialty</label>
                         <select id="specialtyFilter" class="form-input">
                             <option value="">All Specialties</option>
-                            <option value="medical-oncology">Medical Oncology</option>
-                            <option value="surgical-oncology">Surgical Oncology</option>
-                            <option value="radiation-oncology">Radiation Oncology</option>
-                            <option value="radiology">Radiology</option>
-                            <option value="pathology">Pathology</option>
-                            <option value="genetics">Genetics & Genomics</option>
-                            <option value="nursing">Oncology Nursing</option>
-                            <option value="research">Research</option>
+                            {% for s in specialities %}
+                                <option value="{{ s.name|slugify }}">{{ s.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -128,12 +123,9 @@
                         <label class="form-label">Research Interest</label>
                         <select id="researchFilter" class="form-input">
                             <option value="">All Research Areas</option>
-                            <option value="immunotherapy">Immunotherapy</option>
-                            <option value="targeted-therapy">Targeted Therapy</option>
-                            <option value="early-detection">Early Detection</option>
-                            <option value="genetics">Genetic Research</option>
-                            <option value="clinical-trials">Clinical Trials</option>
-                            <option value="survivorship">Survivorship Care</option>
+                            {% for ra in research_areas %}
+                                <option value="{{ ra.name|slugify }}">{{ ra.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -171,7 +163,7 @@
         <div class="container-custom">
             <div id="memberGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for member in members %}
-                <div class="card hover-lift hover-shadow member-card" data-specialty="{% for s in member.specialties.all %}{{ s.name|lower }}{% if not forloop.last %} {% endif %}{% endfor %}" data-location="{{ member.location|lower|default:'' }}" data-experience="{{ member.years_of_experience|default:'' }}" data-research="{% for ra in member.research_interest_areas.all %}{{ ra.name|lower }}{% if not forloop.last %} {% endif %}{% endfor %}" style="{% if forloop.counter > 9 %}display: none;{% endif %}">
+                <div class="card hover-lift hover-shadow member-card" data-specialty="{% for s in member.specialties.all %}{{ s.name|slugify }}{% if not forloop.last %} {% endif %}{% endfor %}" data-location="{{ member.location|lower|default:'' }}" data-experience="{{ member.years_of_experience|default:'' }}" data-research="{% for ra in member.research_interest_areas.all %}{{ ra.name|slugify }}{% if not forloop.last %} {% endif %}{% endfor %}" style="{% if forloop.counter > 9 %}display: none;{% endif %}">
                     <div class="flex items-start gap-4 mb-4">
                         {% if member.image %}
                             <img src="{{ member.image.url }}" alt="{{ member.name }}{% if member.specialties.all %}, {% for s in member.specialties.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if member.years_of_experience %} with {{ member.years_of_experience }} years experience{% endif %}" class="w-20 h-20 rounded-full object-cover border-2 border-primary-200" loading="lazy">
@@ -299,14 +291,14 @@
                 const text = card.textContent.toLowerCase();
                 const searchMatch = text.includes(searchInput.value.toLowerCase());
                 
-                const specialty = card.dataset.specialty;
+                const specialty = card.dataset.specialty || '';
                 const location = card.dataset.location;
                 const experience = parseInt(card.dataset.experience) || 0;
-                const research = card.dataset.research;
+                const research = card.dataset.research || '';
                 
                 // Specialty filter (case-insensitive)
-                const selectedSpecialty = specialtyFilter.value.toLowerCase();
-                const specialtyMatch = !specialtyFilter.value || specialty === selectedSpecialty;
+                const selectedSpecialty = specialtyFilter.value;
+                const specialtyMatch = !selectedSpecialty || specialty.includes(selectedSpecialty);
                 
                 // Location filter (case-insensitive)
                 const selectedLocation = locationFilter.value.toLowerCase();
@@ -323,8 +315,8 @@
                 }
                 
                 // Research Interest filter (case-insensitive)
-                const selectedResearch = researchFilter.value.toLowerCase();
-                const researchMatch = !researchFilter.value || research.includes(selectedResearch);
+                const selectedResearch = researchFilter.value;
+                const researchMatch = !selectedResearch || research.includes(selectedResearch);
                 
                 return searchMatch && specialtyMatch && locationMatch && experienceMatch && researchMatch;
             });
