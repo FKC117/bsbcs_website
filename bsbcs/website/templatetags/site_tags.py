@@ -107,9 +107,9 @@ def get_call_to_action_current(context):
     if view_name:
         cta = CallToAction.objects.filter(page=view_name).order_by('-id').first()
 
-    if not cta:
-        # fallback: most recent CTA overall
-        cta = CallToAction.objects.order_by('-id').first()
+    # Do not fall back to the most-recent CTA for other pages.
+    # If there is no CTA for the current view, return None so templates
+    # can choose to render nothing when appropriate.
 
     cache.set(cache_key, cta, CACHE_TIMEOUT)
     return cta

@@ -6,6 +6,7 @@ import os
 from django.http import FileResponse
 from django.conf import settings
 import re
+from django.core.paginator import Paginator
 
 def favicon(request):
     favicon_path = os.path.join(settings.BASE_DIR, 'website', 'static', 'img', 'favicon.ico')
@@ -239,13 +240,41 @@ def research_and_publications(request):
     return render(request, 'pages/research_and_publications.html', context)
 
 def webinars(request):
-    hero = HeroSection.objects.filter(page='knowledge_center').first()
+    hero = HeroSection.objects.filter(page='webinars').first()
     resource_categories = ResourceCategory.objects.all().order_by('order')
     resources = ResourceItem.objects.all().order_by('order')
-    webinars = Webinar.objects.filter(type='webinar').order_by('order')
-    preceptorship_webinars = Webinar.objects.filter(type='perceptorship').order_by('order')
-    gci_webinars = Webinar.objects.filter(type='gci').order_by('order')
-    call_to_action = CallToAction.objects.filter(page='knowledge_center').first()
+    
+    # Pagination settings: 6 items per page for each section
+    items_per_page = 6
+    
+    # Get webinars and paginate
+    webinars_all = Webinar.objects.filter(type='webinar').order_by('order')
+    webinars_paginator = Paginator(webinars_all, items_per_page)
+    webinars_page = request.GET.get('webinars_page', 1)
+    try:
+        webinars = webinars_paginator.page(webinars_page)
+    except:
+        webinars = webinars_paginator.page(1)
+    
+    # Get preceptorship webinars and paginate
+    preceptorship_all = Webinar.objects.filter(type='perceptorship').order_by('order')
+    preceptorship_paginator = Paginator(preceptorship_all, items_per_page)
+    preceptorship_page = request.GET.get('preceptorship_page', 1)
+    try:
+        preceptorship_webinars = preceptorship_paginator.page(preceptorship_page)
+    except:
+        preceptorship_webinars = preceptorship_paginator.page(1)
+    
+    # Get GCI webinars and paginate
+    gci_all = Webinar.objects.filter(type='gci').order_by('order')
+    gci_paginator = Paginator(gci_all, items_per_page)
+    gci_page = request.GET.get('gci_page', 1)
+    try:
+        gci_webinars = gci_paginator.page(gci_page)
+    except:
+        gci_webinars = gci_paginator.page(1)
+    
+    call_to_action = CallToAction.objects.filter(page='webinars').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
 
     context = {
