@@ -121,18 +121,35 @@ def extract_youtube_id(url):
     if not url:
         return None
     
+    url = url.strip()
+    
     # Handle youtu.be format
-    match = re.search(r'youtu\.be/([^?&]+)', url)
+    match = re.search(r'youtu\.be/([^?&\s]+)', url)
     if match:
         return match.group(1)
     
-    # Handle youtube.com format
-    match = re.search(r'youtube\.com/watch\?v=([^&]+)', url)
+    # Handle youtube.com/watch?v= format
+    match = re.search(r'youtube\.com/watch\?.*v=([^&\s]+)', url)
     if match:
         return match.group(1)
     
-    # Handle youtube.com/embed format
-    match = re.search(r'youtube\.com/embed/([^?&]+)', url)
+    # Handle youtube.com/embed/ format
+    match = re.search(r'youtube\.com/embed/([^?&\s]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle youtube.com/v/ format (old)
+    match = re.search(r'youtube\.com/v/([^?&\s]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle full embed URLs (youtube.com/embed/{id})
+    match = re.search(r'(?:youtube\.com/)?embed/([^?&\s]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle direct video ID (11 chars, alphanumeric with - and _)
+    match = re.search(r'^([a-zA-Z0-9_-]{11})$', url)
     if match:
         return match.group(1)
     
