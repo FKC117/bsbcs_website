@@ -4,7 +4,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, Tag, NavigationLink, OrganizationalValue
+    Webinar, Member, NavigationLink, OrganizationalValue, ResearchInterestArea, Speciality
 )
 from .models import TimelineSection, TimelineItem
 
@@ -45,6 +45,12 @@ class StatisticCounterAdmin(admin.ModelAdmin):
     ordering = ('order',)
     search_fields = ('title',)
 
+@admin.register(ResearchInterestArea)
+class ResearchInterestAreaAdmin(admin.ModelAdmin):
+    list_display = ('id','name')
+@admin.register(Speciality)
+class SpecialityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
 
 @admin.register(MemberSpotlight)
 class MemberSpotlightAdmin(admin.ModelAdmin):
@@ -136,16 +142,23 @@ class WebinarAdmin(admin.ModelAdmin):
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('name', 'specialty', 'location', 'order')
+    list_display = ('name', 'get_specialties', 'get_research_interests', 'location', 'order')
+    list_filter = ('specialties', 'research_interest_areas')
     ordering = ('order',)
-    search_fields = ('name', 'specialty', 'location')
-    filter_horizontal = ('tags',)
+    search_fields = ('name', 'specialties__name', 'research_interest_areas__name', 'location')
+
+    def get_specialties(self, obj):
+        return ', '.join([s.name for s in obj.specialties.all()])
+    get_specialties.short_description = 'Specialties'
+
+    def get_research_interests(self, obj):
+        return ', '.join([r.name for r in obj.research_interest_areas.all()])
+    get_research_interests.short_description = 'Research Interests'
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+
+# Tag model intentionally left unregistered (removed from Member). If you want to manage
+# tags separately, re-register here.
 
 
 @admin.register(NavigationLink)

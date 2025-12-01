@@ -118,6 +118,18 @@ class StatisticCounter(models.Model):
     class Meta:
         ordering = ['order']
 
+class ResearchInterestArea(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+class Speciality(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
 
 class MemberSpotlight(models.Model):
     name = models.CharField(max_length=255)
@@ -340,15 +352,17 @@ class Webinar(models.Model):
 
 class Member(models.Model):
     name = models.CharField(max_length=255)
-    specialty = models.CharField(max_length=255, blank=True, null=True)
+    # 'specialty' (text field) removed in favor of structured ForeignKey `specialty_fk`
     location = models.CharField(max_length=255, blank=True, null=True)
     years_of_experience = models.PositiveIntegerField(blank=True, null=True)
-    research_interest = models.TextField(blank=True, null=True)
     profile_description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='images/members/', blank=True, null=True)
     institution = models.CharField(max_length=255, blank=True, null=True)
     position = models.CharField(max_length=255, blank=True, null=True)
-    tags = models.ManyToManyField('Tag', blank=True)
+    # tags removed; use `research_interest_areas` and dedicated models instead
+    # `specialty_fk` was removed in favor of the `specialties` ManyToManyField.
+    specialties = models.ManyToManyField(Speciality, blank=True, related_name='members_specialties')
+    research_interest_areas = models.ManyToManyField(ResearchInterestArea, blank=True, related_name='members')
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -418,3 +432,4 @@ class TimelineItem(models.Model):
 
     class Meta:
         ordering = ['order']
+
