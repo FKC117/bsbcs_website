@@ -345,7 +345,7 @@ class Member(models.Model):
     years_of_experience = models.PositiveIntegerField(blank=True, null=True)
     research_interest = models.TextField(blank=True, null=True)
     profile_description = models.TextField(blank=True, null=True)
-    image_url = models.ImageField(upload_to='images/members/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/members/', blank=True, null=True)
     institution = models.CharField(max_length=255, blank=True, null=True)
     position = models.CharField(max_length=255, blank=True, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
