@@ -241,7 +241,8 @@ class Committee(models.Model):
 
 class Partnership(models.Model):
     name = models.CharField(max_length=255)
-    logo_url = models.URLField(blank=True, null=True)
+    logo = models.ImageField(upload_to='images/partnership/', blank=True, null=True)
+    link_url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
 
