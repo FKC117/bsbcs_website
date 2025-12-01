@@ -32,7 +32,7 @@
                             <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
                         {% endif %}
                         {% if call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
-                            <a href="{{ call_to_action.secondary_button_url }}" class="btn-outline inline-block">{{ call_to_action.secondary_button_text }}</a>
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white inline-block">{{ call_to_action.secondary_button_text }}</a>
                         {% endif %}
                     </div>
                 {% endif %}
@@ -245,8 +245,16 @@
                 <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6">Join Our Professional Network</h2>
                 <p class="text-lg text-secondary-100 mb-8 leading-relaxed">Connect with breast cancer specialists, access exclusive research, participate in collaborative studies, and advance your professional development.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white">Apply for Membership</button>
-                    <button class="btn bg-transparent border-2 border-white text-white hover:bg-white/10 focus:ring-white">Learn About Benefits</button>
+                {% if call_to_action %}
+                    <div class="mb-8 flex flex-wrap gap-4">
+                        {% if call_to_action.primary_button_text and call_to_action.primary_button_url %}
+                            <a href="{{ call_to_action.primary_button_url }}" class="btn-primary inline-block">{{ call_to_action.primary_button_text }}</a>
+                        {% endif %}
+                        {% if call_to_action.secondary_button_text and call_to_action.secondary_button_url %}
+                            <a href="{{ call_to_action.secondary_button_url }}" class="btn bg-white text-secondary hover:bg-secondary-50 focus:ring-white inline-block">{{ call_to_action.secondary_button_text }}</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 </div>
             </div>
         </div>
