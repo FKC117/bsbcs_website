@@ -46,6 +46,7 @@ class HeroSection(models.Model):
         ('member_directory', 'Member Directory'),
         ('news_and_updates', 'News and Updates'),
         ('research_and_publications', 'Research and Publications'),
+        ('webinars', 'Webinars'),
     ]
 
     page = models.CharField(max_length=50, choices=PAGE_CHOICES)
@@ -332,15 +333,38 @@ class ResourceItem(models.Model):
         ordering = ['order']
 
 
+class Panelist(models.Model):
+    """A panelist or moderator for webinars and events."""
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)  # Job title/role
+    image = models.ImageField(upload_to='images/panelists/', blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+   
+    def __str__(self):
+        return self.name
+
+
+
+
 class Webinar(models.Model):
+    TYPE_CHOICES = [
+        ('perceptorship', 'Percepetoship'),
+        ('webinar', 'Webinar'),
+        ('gci', 'GCI'),
+        ('other', 'Other'),
+    ]
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='webinar')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     presenter_name = models.CharField(max_length=255, blank=True, null=True)
-    presenter_image_url = models.ImageField(upload_to='images/presenters/', blank=True, null=True)
+    presenter_image = models.ImageField(upload_to='images/presenters/', blank=True, null=True)
     recorded_date = models.DateField(blank=True, null=True)
     duration = models.DurationField(blank=True, null=True)
     video_url = models.URLField(blank=True, null=True)
     slides_url = models.URLField(blank=True, null=True)
+    international_panel = models.ManyToManyField(Panelist, blank=True, related_name='international_panel_webinars')
+    national_panel = models.ManyToManyField(Panelist, blank=True, related_name='national_panel_webinars')
+    moderators = models.ManyToManyField(Panelist, blank=True, related_name='moderated_webinars')
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):

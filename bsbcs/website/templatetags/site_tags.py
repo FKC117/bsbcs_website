@@ -1,6 +1,7 @@
 from django import template
 from django.urls import reverse, NoReverseMatch
 from django.core.cache import cache
+import re
 
 from website.models import SiteSettings, NavigationLink, HeroSection, CallToAction
 
@@ -79,3 +80,60 @@ def get_call_to_action(page_name):
     cta = CallToAction.objects.filter(page=page_name).first()
     cache.set(cache_key, cta, CACHE_TIMEOUT)
     return cta
+
+
+@register.simple_tag(takes_context=True)
+def get_call_to_action_current(context):
+    """Return a CallToAction for the current request's view name (if any),
+    otherwise fall back to the most recent CTA.
+
+    This tag requires request to be available in the template context (Django
+    provides it when you use RequestContext or render shortcuts which pass
+    the request). Results are cached per view name for CACHE_TIMEOUT seconds.
+    """
+    request = context.get('request')
+    view_name = None
+    if request is not None:
+        resolver = getattr(request, 'resolver_match', None)
+        if resolver:
+            view_name = resolver.url_name
+
+    cache_key = f'call_to_action_current_{view_name or "__latest"}'
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    cta = None
+    if view_name:
+        cta = CallToAction.objects.filter(page=view_name).order_by('-id').first()
+
+    if not cta:
+        # fallback: most recent CTA overall
+        cta = CallToAction.objects.order_by('-id').first()
+
+    cache.set(cache_key, cta, CACHE_TIMEOUT)
+    return cta
+
+
+@register.filter
+def extract_youtube_id(url):
+    """Extract YouTube video ID from various URL formats."""
+    if not url:
+        return None
+    
+    # Handle youtu.be format
+    match = re.search(r'youtu\.be/([^?&]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle youtube.com format
+    match = re.search(r'youtube\.com/watch\?v=([^&]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle youtube.com/embed format
+    match = re.search(r'youtube\.com/embed/([^?&]+)', url)
+    if match:
+        return match.group(1)
+    
+    return None

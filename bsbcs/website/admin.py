@@ -4,7 +4,7 @@ from .models import (
     HeroSection, CarouselItem, NewsTickerItem, QuickAccessCard, StatisticCounter,
     MemberSpotlight, ResearchHighlight, Event, CallToAction, BoardMember,
     Committee, Partnership, Award, AnnualReport, ResourceCategory, ResourceItem,
-    Webinar, Member, NavigationLink, OrganizationalValue, ResearchInterestArea, Speciality
+    Webinar, Member, NavigationLink, OrganizationalValue, ResearchInterestArea, Speciality, Panelist
 )
 from .models import TimelineSection, TimelineItem
 
@@ -75,6 +75,12 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 
+@admin.register(Panelist)
+class PanelistAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ('name', 'description')
+
+
 @admin.register(CallToAction)
 class CallToActionAdmin(admin.ModelAdmin):
     list_display = ('title', 'page')
@@ -135,7 +141,9 @@ class ResourceItemAdmin(admin.ModelAdmin):
 
 @admin.register(Webinar)
 class WebinarAdmin(admin.ModelAdmin):
-    list_display = ('title', 'presenter_name', 'recorded_date', 'order')
+    list_display = ('title', 'type', 'presenter_name', 'recorded_date', 'order')
+    list_filter = ('type',)
+    filter_horizontal = ('international_panel', 'national_panel', 'moderators')
     ordering = ('order',)
     search_fields = ('title', 'presenter_name')
 

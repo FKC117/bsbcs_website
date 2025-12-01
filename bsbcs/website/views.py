@@ -5,6 +5,7 @@ from pathlib import Path
 import os
 from django.http import FileResponse
 from django.conf import settings
+import re
 
 def favicon(request):
     favicon_path = os.path.join(settings.BASE_DIR, 'website', 'static', 'img', 'favicon.ico')
@@ -18,6 +19,28 @@ from .models import (
 )
 from .models import ResearchInterestArea, Speciality
 
+
+def extract_youtube_id(url):
+    """Extract YouTube video ID from various URL formats."""
+    if not url:
+        return None
+    
+    # Handle youtu.be format
+    match = re.search(r'youtu\.be/([^?&]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle youtube.com format
+    match = re.search(r'youtube\.com/watch\?v=([^&]+)', url)
+    if match:
+        return match.group(1)
+    
+    # Handle youtube.com/embed format
+    match = re.search(r'youtube\.com/embed/([^?&]+)', url)
+    if match:
+        return match.group(1)
+    
+    return None
 
 def homepage(request):
     hero = HeroSection.objects.filter(page='homepage').first()
@@ -214,3 +237,37 @@ def research_and_publications(request):
         'navigation_links': navigation_links,
     }
     return render(request, 'pages/research_and_publications.html', context)
+
+def webinars(request):
+    hero = HeroSection.objects.filter(page='knowledge_center').first()
+    resource_categories = ResourceCategory.objects.all().order_by('order')
+    resources = ResourceItem.objects.all().order_by('order')
+    webinars = Webinar.objects.filter(type='webinar').order_by('order')
+    preceptorship_webinars = Webinar.objects.filter(type='perceptorship').order_by('order')
+    gci_webinars = Webinar.objects.filter(type='gci').order_by('order')
+    call_to_action = CallToAction.objects.filter(page='knowledge_center').first()
+    navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
+
+    context = {
+        'hero': hero,
+        'resource_categories': resource_categories,
+        'resources': resources,
+        'webinars': webinars,
+        'preceptorship_webinars': preceptorship_webinars,
+        'gci_webinars': gci_webinars,
+        'call_to_action': call_to_action,
+        'navigation_links': navigation_links,
+    }
+    return render(request, 'pages/webinars.html', context)
+
+
+def webinar_detail(request, pk):
+    """Display full webinar details including video and panelists."""
+    webinar = Webinar.objects.get(pk=pk)
+    navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
+    
+    context = {
+        'webinar': webinar,
+        'navigation_links': navigation_links,
+    }
+    return render(request, 'pages/webinar_detail.html', context)
