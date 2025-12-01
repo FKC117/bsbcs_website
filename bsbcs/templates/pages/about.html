@@ -209,7 +209,7 @@
         </div>
     </section>
     {% endif %}
-
+    
     <!-- Leadership Section -->
     <section class="section">
         <div class="container-custom">
@@ -219,155 +219,58 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <!-- President -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_11616af80-1763294976574.png" alt="Dr. Mohammad Rahman, President and Medical Oncologist with 25 years of breast cancer research experience" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-primary" loading="lazy" onerror="this.src='https://img.rocket.new/generatedImages/rocket_gen_img_14c59ee2c-1763296057628.png'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            President
+                {% for member in board_members %}
+                    <div class="card-elevated hover-lift hover-shadow text-center">
+                        <div class="relative mb-6 inline-block">
+                            {% if forloop.counter|divisibleby:3 %}
+                                <div class="w-32 h-32 rounded-full mx-auto border-4 border-accent bg-accent-50 flex items-center justify-center overflow-hidden">
+                            {% elif forloop.counter|divisibleby:2 %}
+                                <div class="w-32 h-32 rounded-full mx-auto border-4 border-secondary bg-secondary-50 flex items-center justify-center overflow-hidden">
+                            {% else %}
+                                <div class="w-32 h-32 rounded-full mx-auto border-4 border-primary bg-primary-50 flex items-center justify-center overflow-hidden">
+                            {% endif %}
+                                    {% if member.image_url %}
+                                        <img src="{{ member.image_url.url }}" alt="{{ member.name }}" class="w-32 h-32 rounded-full object-cover mx-auto" loading="lazy">
+                                    {% else %}
+                                        <svg class="w-16 h-16 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                        </svg>
+                                    {% endif %}
+                                    <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 {% if forloop.counter|divisibleby:3 %}bg-accent{% elif forloop.counter|divisibleby:2 %}bg-secondary{% else %}bg-primary{% endif %} text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                        {{ member.get_role_display }}
+                                    </div>
+                                </div>
+                        </div>
+                        <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">{{ member.name }}</h3>
+                        {% if member.title %}
+                            <p class="text-sm text-secondary font-semibold mb-3">{{ member.title }}</p>
+                        {% endif %}
+                        {% if member.qualifications %}
+                            <p class="text-sm text-secondary font-semibold mb-2">{{ member.qualifications }}</p>
+                        {% endif %}
+                        {% if member.description %}
+                            <p class="text-sm text-text-secondary mb-4">{{ member.description }}</p>
+                        {% endif %}
+                        <div class="flex justify-center gap-3">
+                            {% if member.social_links and member.social_links.linkedin %}
+                                <a href="{{ member.social_links.linkedin }}" class="text-primary hover:text-primary-700 transition-colors" target="_blank" rel="noopener noreferrer">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                            {% if member.social_links and member.social_links.twitter %}
+                                <a href="{{ member.social_links.twitter }}" class="text-primary hover:text-primary-700 transition-colors" target="_blank" rel="noopener noreferrer">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Mohammad Rahman</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, MD, FRCP</p>
-                    <p class="text-sm text-text-secondary mb-4">Medical Oncologist with 25+ years specializing in breast cancer research and treatment protocols</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Vice President -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_14aaabe51-1763298957878.png" alt="Dr. Fatima Ahmed, Vice President and Surgical Oncologist specializing in breast reconstruction" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-secondary" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Vice President
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Fatima Ahmed</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, MS, FACS</p>
-                    <p class="text-sm text-text-secondary mb-4">Surgical Oncologist pioneering minimally invasive breast surgery techniques in Bangladesh</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Secretary General -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop" alt="Dr. Kamal Hossain, Secretary General and Radiation Oncologist with expertise in advanced treatment protocols" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-accent" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-accent text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Secretary General
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Kamal Hossain</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, MD, DMRT</p>
-                    <p class="text-sm text-text-secondary mb-4">Radiation Oncologist advancing precision radiotherapy techniques for breast cancer treatment</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Treasurer -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_17dda3c58-1763298820872.png" alt="Dr. Nusrat Jahan, Treasurer and Pathologist specializing in breast cancer diagnostics" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-primary" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Treasurer
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Nusrat Jahan</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, MD, FRCPath</p>
-                    <p class="text-sm text-text-secondary mb-4">Pathologist advancing molecular diagnostics and precision medicine in breast cancer care</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Research Director -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1c74b2d51-1763294866887.png" alt="Dr. Ashraf Ali, Research Director and Clinical Researcher leading innovative breast cancer studies" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-secondary" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Research Director
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Ashraf Ali</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, PhD, FRCP</p>
-                    <p class="text-sm text-text-secondary mb-4">Clinical Researcher leading groundbreaking studies in targeted therapy and immunotherapy</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Education Director -->
-                <div class="card-elevated hover-lift hover-shadow text-center">
-                    <div class="relative mb-6 inline-block">
-                        <img src="https://img.rocket.new/generatedImages/rocket_gen_img_17796660d-1763650254856.png" alt="Dr. Sabrina Khan, Education Director and Medical Educator developing training programs" class="w-32 h-32 rounded-full object-cover mx-auto border-4 border-accent" loading="lazy" onerror="this.src='https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;">
-                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-accent text-white px-3 py-1 rounded-full text-xs font-semibold">
-                            Education Director
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-headline font-semibold text-text-primary mb-1">Dr. Sabrina Khan</h3>
-                    <p class="text-sm text-secondary font-semibold mb-3">MBBS, MD, FACP</p>
-                    <p class="text-sm text-text-secondary mb-4">Medical Educator developing comprehensive training programs for healthcare professionals</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" class="text-primary hover:text-primary-700 transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+                {% empty %}
+                    <p class="text-center text-text-secondary">No leaders have been added yet.</p>
+                {% endfor %}
             </div>
 
             <!-- View Full Board Button -->
@@ -520,6 +423,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- Partnerships & Recognition Section -->
     <section class="section bg-primary-50">
