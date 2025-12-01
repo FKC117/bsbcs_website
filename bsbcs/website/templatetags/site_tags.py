@@ -137,3 +137,13 @@ def extract_youtube_id(url):
         return match.group(1)
     
     return None
+
+
+@register.filter
+def youtube_thumbnail(url):
+    """Extract YouTube video ID and return thumbnail URL."""
+    video_id = extract_youtube_id(url)
+    if video_id:
+        # Use medium quality thumbnail (320x180)
+        return f'https://img.youtube.com/vi/{video_id}/mqdefault.jpg'
+    return None
