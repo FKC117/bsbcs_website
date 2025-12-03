@@ -168,7 +168,10 @@ def about(request):
 def knowledge_center(request):
     hero = HeroSection.objects.filter(page='knowledge_center').first()
     resource_categories = ResourceCategory.objects.all().order_by('order')
-    resources = ResourceItem.objects.all().order_by('order')
+    # Featured Resources section: only featured items
+    featured_resources = ResourceItem.objects.filter(is_featured=True).order_by('order')
+    # Clinical Guidelines section: all items (regardless of is_featured)
+    all_resources = ResourceItem.objects.all().order_by('order')
     webinars = Webinar.objects.all().order_by('order')
     call_to_action = CallToAction.objects.filter(page='knowledge_center').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
@@ -176,7 +179,8 @@ def knowledge_center(request):
     context = {
         'hero': hero,
         'resource_categories': resource_categories,
-        'resources': resources,
+        'featured_resources': featured_resources,
+        'all_resources': all_resources,
         'webinars': webinars,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,

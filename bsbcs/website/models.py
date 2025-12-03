@@ -323,7 +323,7 @@ class ResourceItem(models.Model):
     updated_date = models.DateField(blank=True, null=True)
     file_upload = models.FileField(upload_to='files/resources/', blank=True, null=True)
     external_link = models.URLField(blank=True, null=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
+    is_featured = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
