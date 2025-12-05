@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bangladesh Society of Breast Cancer Studies - Authoritative digital hub for breast cancer research, education, and clinical excellence">
     <title>{% block title %}BSBCS Portal - Bangladesh Society of Breast Cancer Studies{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site_main.css' %}">
     {% if site_settings and site_settings.favicon %}
         <link rel="icon" href="{{ site_settings.favicon.url }}" />
     {% endif %}
@@ -60,7 +60,7 @@
                         <a href="{% url 'member_directory' %}" class="text-text-secondary hover:text-primary transition-colors">Members</a>
                         <a href="{% url 'research_and_publications' %}" class="text-text-secondary hover:text-primary transition-colors">Research</a>
                         <a href="{% url 'knowledge_center' %}" class="text-text-secondary hover:text-primary transition-colors">Resources</a>
-                        <a href="{% url 'news_and_updates' %}" class="text-text-secondary hover:text-primary transition-colors">News</a>
+                        <a href="{% url 'events' %}" class="text-text-secondary hover:text-primary transition-colors">Events</a>
                         <a href="{% url 'webinars' %}" class="text-text-secondary hover:text-primary transition-colors">Webinars</a>
                     {% endif %}
                     {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
@@ -91,7 +91,7 @@
                         <a href="{% url 'member_directory' %}" class="text-text-secondary hover:text-primary transition-colors">Members</a>
                         <a href="{% url 'research_and_publications' %}" class="text-text-secondary hover:text-primary transition-colors">Research</a>
                         <a href="{% url 'knowledge_center' %}" class="text-text-secondary hover:text-primary transition-colors">Resources</a>
-                        <a href="{% url 'news_and_updates' %}" class="text-text-secondary hover:text-primary transition-colors">News</a>
+                        <a href="{% url 'events' %}" class="text-text-secondary hover:text-primary transition-colors">Events</a>
                         <a href="{% url 'webinars' %}" class="text-text-secondary hover:text-primary transition-colors">Webinars</a>
                     {% endif %}
                     {% if call_to_action and call_to_action.primary_button_text and call_to_action.primary_button_url %}
@@ -150,7 +150,7 @@
                         <li><a href="{% url 'member_directory' %}" class="text-gray-400 hover:text-white transition-colors">Members</a></li>
                         <li><a href="{% url 'research_and_publications' %}" class="text-gray-400 hover:text-white transition-colors">Research</a></li>
                         <li><a href="{% url 'knowledge_center' %}" class="text-gray-400 hover:text-white transition-colors">Resources</a></li>
-                        <li><a href="{% url 'news_and_updates' %}" class="text-gray-400 hover:text-white transition-colors">News</a></li>
+                        <li><a href="{% url 'events' %}" class="text-gray-400 hover:text-white transition-colors">Events</a></li>
                         <li><a href="{% url 'webinars' %}" class="text-gray-400 hover:text-white transition-colors">Webinars</a></li>
                     </ul>
                 </div>

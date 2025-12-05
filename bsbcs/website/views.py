@@ -162,7 +162,7 @@ def about(request):
         'timeline_section': timeline_section,
         'timeline_items': timeline_items,
     }
-    return render(request, 'pages/about.html', context)
+    return render(request, 'pages/about_site.html', context)
 
 
 def knowledge_center(request):
@@ -208,21 +208,21 @@ def member_directory(request):
     return render(request, 'pages/member_directory.html', context)
 
 
-def news_and_updates(request):
-    hero = HeroSection.objects.filter(page='news_and_updates').first()
+def events(request):
+    hero = HeroSection.objects.filter(page='events').first()
     news_tickers = NewsTickerItem.objects.filter(is_active=True).order_by('order')
-    events = Event.objects.all().order_by('order', 'date')
-    call_to_action = CallToAction.objects.filter(page='news_and_updates').first()
+    events_list = Event.objects.all().order_by('order', 'date')
+    call_to_action = CallToAction.objects.filter(page='events').first()
     navigation_links = NavigationLink.objects.filter(is_active=True).order_by('order')
 
     context = {
         'hero': hero,
         'news_tickers': news_tickers,
-        'events': events,
+        'events': events_list,
         'call_to_action': call_to_action,
         'navigation_links': navigation_links,
     }
-    return render(request, 'pages/news_and_updates.html', context)
+    return render(request, 'pages/events.html', context)
 
 
 def research_and_publications(request):

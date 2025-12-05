@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 ('Members', 'member_directory', 2),
                 ('Research', 'research_and_publications', 3),
                 ('Resources', 'knowledge_center', 4),
-                ('News', 'news_and_updates', 5),
+                ('Events', 'events', 5),
             ]
             for label, url_name, order in navs:
                 NavigationLink.objects.create(label=label, url_name=url_name, order=order, is_active=True)
